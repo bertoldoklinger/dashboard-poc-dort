@@ -1,7 +1,7 @@
 
 
 
-export const hospitais = [
+const hospitais = [
   { value: 2, label: 'AGENCIA TRANSFUSIONAL BACABAL' },
   { value: 3, label: 'AGENCIA TRANSFUSIONAL BARRA DO CORDA' },
   { value: 4, label: 'AGENCIA TRANSFUSIONAL CHAPADINHA' },
@@ -117,3 +117,9 @@ export const hospitais = [
   { value: 100, label: 'UPA TIMON' },
   { value: 101, label: 'UPA VINHAIS' },
 ]
+
+
+export const hospitals = hospitais.map(hospital => ({
+  ...hospital,
+  value: `${hospital.value}_${hospital.label.replace(/\s+/g, '_').toUpperCase()}`
+}));

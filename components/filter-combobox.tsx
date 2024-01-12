@@ -17,7 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { hospitais } from "@/utils/hospitais"
+import { hospitals } from "@/utils/hospitais"
 
 
 export function FilterCombobox() {
@@ -34,7 +34,7 @@ export function FilterCombobox() {
           className="w-[200px] justify-between"
         >
           {value
-            ? hospitais.find((hospital) => hospital.value === value)?.label
+            ? hospitals.find((hospital) => hospital.value === value)?.label
             : "Todos"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -42,12 +42,12 @@ export function FilterCombobox() {
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Filtrar por..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandEmpty>Hospital não encontrado</CommandEmpty>
           <CommandGroup>
-            {hospitais.map((hospital) => (
+            {hospitals.map((hospital) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
+                key={hospital.value}
+                value={hospital.value}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
@@ -56,10 +56,10 @@ export function FilterCombobox() {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0"
+                    value === hospital.value ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {framework.label}
+                {hospital.label}
               </CommandItem>
             ))}
           </CommandGroup>
