@@ -29,13 +29,11 @@ export function Sidebar() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-
                     className={
                       'flex justify-center gap-x-3 rounded-full bg-gray-100 p-3 text-center text-lg font-semibold leading-6 text-[#548235] hover:bg-white hover:text-green-500 dark:bg-[#33B04F] dark:text-white'
                     }
                   >
                     {item.name}
-
                   </Link>
                 </li>
               ))}
