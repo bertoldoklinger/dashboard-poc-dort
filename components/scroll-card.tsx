@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 
 export type CardInfo = {
   unidade: string;
-  previsto: number; // Alterado para número para permitir a ordenação
+  previsto: number;
 };
 
 interface ScrollCardProps {
