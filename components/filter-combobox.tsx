@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useState } from "react"
+import { hospitals } from "@/utils/hospitais"
 import { Check, ChevronsUpDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -17,12 +19,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { hospitals } from "@/utils/hospitais"
 
+export interface FilterComboboxProps {
+  value?: string
+  onChange: (value: string) => void
+}
 
-export function FilterCombobox() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+export function FilterCombobox({ value, onChange }: FilterComboboxProps) {
+  const [open, setOpen] = useState(false)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,7 +53,7 @@ export function FilterCombobox() {
                 key={hospital.value}
                 value={hospital.value}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue)
+                  onChange(currentValue === value ? "" : currentValue)
                   setOpen(false)
                 }}
               >
