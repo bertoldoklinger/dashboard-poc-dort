@@ -2,23 +2,23 @@ import InfoCard from "@/components/info-card"
 import ScrollCard, { CardInfo } from "@/components/scroll-card"
 
 const cards: CardInfo[] = [
-  { unidade: 'Unidade 1', previsto: 1 },
-  { unidade: 'Unidade 2', previsto: 2 },
-  { unidade: 'Unidade 3', previsto: 3 },
-  { unidade: 'Unidade 4', previsto: 4 },
-  { unidade: 'Unidade 5', previsto: 5 },
-  { unidade: 'Unidade 6', previsto: 6 },
-  { unidade: 'Unidade 7', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-  { unidade: 'Unidade 8', previsto: 7 },
-];
+  { unidade: "Unidade 1", previsto: 1 },
+  { unidade: "Unidade 2", previsto: 2 },
+  { unidade: "Unidade 3", previsto: 3 },
+  { unidade: "Unidade 4", previsto: 4 },
+  { unidade: "Unidade 5", previsto: 5 },
+  { unidade: "Unidade 6", previsto: 6 },
+  { unidade: "Unidade 7", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+  { unidade: "Unidade 8", previsto: 7 },
+]
 
 export default function DashboardPage() {
   return (

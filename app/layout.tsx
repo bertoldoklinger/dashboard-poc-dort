@@ -28,7 +28,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="pt" suppressHydrationWarning>
         <head />
         <body
           className={cn(
@@ -37,13 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <section className="relative flex min-h-screen">
-              <Sidebar />
-              <Header />
-              <div className="flex w-[84.5%] pb-8 pl-10 pr-2 pt-44">
-                {children}
-              </div>
-            </section>
+            {children}
           </ThemeProvider>
         </body>
       </html>
