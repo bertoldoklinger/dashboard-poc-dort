@@ -7,7 +7,7 @@ type InfoCardProps = {
 
 export default function InfoCard({ title, value }: InfoCardProps) {
   return (
-    <div className="gap- flex h-44 flex-col items-center justify-center rounded-xl bg-white dark:bg-gray-800">
+    <div className="flex h-44 flex-col items-center justify-center gap-3 rounded-xl bg-white dark:bg-gray-800">
       <h1 className="text-center font-medium text-[#5D9CD5] dark:text-gray-200 md:text-lg lg:text-2xl">
         {title}
       </h1>
