@@ -18,13 +18,13 @@ export default function Header() {
   const [filter3, setFilter3] = useState("")
 
   return (
-    <div className=" absolute w-full pl-5 pr-2 pt-4 ">
-      <header className="relative flex h-32 w-full items-center justify-between space-x-10 rounded-xl bg-white px-5 shadow-xl">
+    <div className=" absolute w-full pl-4 pr-2 pt-4">
+      <header className="relative flex h-32 w-full items-center justify-between space-x-10 rounded-xl bg-white px-5 shadow-xl dark:bg-zinc-900">
         <Image
           src="/logo-emserh.png"
           alt="Logo"
-          width={250}
-          height={200}
+          width={350}
+          height={350}
           quality={100}
         />
         <div className="flex w-full items-start justify-start gap-6">
