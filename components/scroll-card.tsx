@@ -7,13 +7,15 @@ import { Button } from "./ui/button"
 export type CardInfo = {
   unidade: string
   previsto: number
+
 }
 
 interface ScrollCardProps {
   cards: CardInfo[]
+  isCurrency?: boolean
 }
 
-export default function ScrollCard({ cards }: ScrollCardProps) {
+export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
   const [isAsc, setIsAsc] = useState(true)
 
   const sortedCards = [...cards].sort((a, b) => {
@@ -43,10 +45,12 @@ export default function ScrollCard({ cards }: ScrollCardProps) {
         {sortedCards.map((card, index) => (
           <div
             key={index}
-            className="flex items-center justify-between border-t bg-white p-2 dark:bg-zinc-500"
+            className="flex items-center justify-between border-t bg-white p-2 px-3 dark:bg-zinc-500"
           >
             <h2 className=" text-[#2C55A0] dark:text-gray-100">{card.unidade}</h2>
-            <p className=" text-[#2C55A0] dark:text-gray-100">{card.previsto}</p>
+            <p className=" font-medium text-[#2C55A0] dark:text-gray-100">{isCurrency
+              ? card.previsto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+              : card.previsto}</p>
           </div>
         ))}
       </div>
