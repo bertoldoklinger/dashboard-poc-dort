@@ -11,6 +11,7 @@ import {
 
 import { FilterCombobox } from "./filter-combobox"
 import { Button } from "./ui/button"
+import { SearchFilter } from "./search-filter"
 
 export default function Header() {
   const [filter1, setFilter1] = useState("")
@@ -26,7 +27,8 @@ export default function Header() {
           quality={100}
         />
         <div className="flex w-full items-start justify-start gap-6">
-          <FilterCombobox value={filter1} onChange={setFilter1} />
+          {/* <FilterCombobox value={filter1} onChange={setFilter1} /> */}
+          <SearchFilter />
         </div>
         <div className="flex items-end space-x-4 text-white">
           <Button

@@ -16,9 +16,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <section className="relative flex min-h-screen">
-        <Sidebar />
-        <Header />
-        <div className="flex w-[84.5%] pb-8 pl-10 pr-2 pt-44">{children}</div>
+        <div className="fixed h-full">
+          <Sidebar />
+        </div>
+        <div className="fixed w-full">
+          <Header />
+        </div>
+        <div className="ml-[20%] flex w-[80%] overflow-y-auto pb-8 pl-10 pr-2 pt-44 2xl:ml-[15.5%] 2xl:w-[85.5%]">{children}</div>
       </section>
     </>
   )

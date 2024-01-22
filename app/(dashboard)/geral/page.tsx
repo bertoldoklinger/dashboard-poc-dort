@@ -2,6 +2,7 @@ import InfoCard from "@/components/info-card"
 import ScrollCard, { CardInfo } from "@/components/scroll-card"
 import { Suspense } from "react"
 import { SkeletonCard, SkeletonInfoCard } from "./components/skeleton"
+import { ReportTable } from "@/components/report-table"
 
 const cards: CardInfo[] = [
   { unidade: "Unidade 1", previsto: 1 },
@@ -34,10 +35,10 @@ async function getCardInfo() {
 
 export default async function DashboardPage() {
   const data = await getCardInfo()
-  const rhByUnidade = data.rhByUnidade
-  const rhTotalByUnidade = Object.entries(rhByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
-  const totalMonthlyPdtValueByUnidade = data.totalMonthlyPdtValueByUnidade
-  const totalMonthlyPdtValueFormatted = Object.entries(totalMonthlyPdtValueByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
+  // const rhByUnidade = data.rhByUnidade
+  // const rhTotalByUnidade = Object.entries(rhByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
+  // const totalMonthlyPdtValueByUnidade = data.totalMonthlyPdtValueByUnidade
+  // const totalMonthlyPdtValueFormatted = Object.entries(totalMonthlyPdtValueByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
   return (
     <section className=" max-h-screen w-full space-y-8">
       <header className="flex h-20 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
@@ -45,27 +46,28 @@ export default async function DashboardPage() {
           DADOS GERAIS REDE EMSERH
         </h1>
       </header>
-      <div className="grid grid-cols-3 gap-9">
+      <div className="grid grid-cols-3 gap-9 ">
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Quantitativo Total de RH da Rede" value={data.rhTotal} />
+          <InfoCard title="RH Total PDT" value={data.rhTotal} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Valor Total Mensal do PDT" value={data.totalMonthlyPdtValue} />
+          <InfoCard title="RH Total Folha" value={29384} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Valor Total Mensal de Folha" value={198000000} />
+          <InfoCard title="Saldo" value={-9342} />
+        </Suspense>
+        <Suspense fallback={<SkeletonInfoCard />}>
+          <InfoCard title="Salário Total PDT" value={data.totalMonthlyPdtValue} isCurrency />
+        </Suspense>
+        <Suspense fallback={<SkeletonInfoCard />}>
+          <InfoCard title="Salário Total Folha" value={data.totalMonthlyPdtValue} isCurrency />
+        </Suspense>
+        <Suspense fallback={<SkeletonInfoCard />}>
+          <InfoCard title="Saldo" value={0} isCurrency />
         </Suspense>
       </div>
-      <div className="grid max-h-[28rem] grid-cols-3 gap-9">
-        <Suspense fallback={<SkeletonCard />}>
-          <ScrollCard cards={rhTotalByUnidade} />
-        </Suspense>
-        <Suspense fallback={<SkeletonCard />}>
-          <ScrollCard cards={totalMonthlyPdtValueFormatted} isCurrency />
-        </Suspense>
-        <Suspense fallback={<SkeletonCard />}>
-          <ScrollCard cards={cards} />
-        </Suspense>
+      <div>
+        <ReportTable />
       </div>
     </section>
   )

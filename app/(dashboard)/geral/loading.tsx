@@ -12,11 +12,11 @@ export default function LoadingPage() {
         <SkeletonInfoCard />
         <SkeletonInfoCard />
         <SkeletonInfoCard />
+        <SkeletonInfoCard />
+        <SkeletonInfoCard />
+        <SkeletonInfoCard />
       </div>
       <div className="grid max-h-[28rem] grid-cols-3 gap-9">
-        <SkeletonCard />
-        <SkeletonCard />
-        <SkeletonCard />
       </div>
     </section>
   )
