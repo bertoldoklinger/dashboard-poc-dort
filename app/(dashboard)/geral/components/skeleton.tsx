@@ -55,10 +55,8 @@ export function SkeletonCard() {
         <div>
           <div className="mb-2.5 h-2.5 w-24 rounded-full bg-gray-300 dark:bg-gray-600" />
         </div>
-
       </div>
     </div>
-
   )
 }
 

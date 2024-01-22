@@ -33,13 +33,12 @@ export function FilterCombobox({ value, onChange }: FilterComboboxProps) {
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="h-10 whitespace-nowrap px-2"
         >
           {value
             ? hospitals.find((hospital) => hospital.value === value)?.label
-            : "Todos"}
+            : "Nome da unidade hospitalar"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

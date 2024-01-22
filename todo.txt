@@ -1,0 +1,4 @@
+TODO
+- [ ] - Adicionar filtro por referência de Data
+- [ ] - Adicionar colunas da table de comparação
+- [ ] - Desacoplar componentes e lógica em custom hook

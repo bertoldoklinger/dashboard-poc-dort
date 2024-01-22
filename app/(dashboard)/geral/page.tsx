@@ -1,8 +1,10 @@
-import InfoCard from "@/components/info-card"
-import ScrollCard, { CardInfo } from "@/components/scroll-card"
 import { Suspense } from "react"
-import { SkeletonCard, SkeletonInfoCard } from "./components/skeleton"
+
+import InfoCard from "@/components/info-card"
 import { ReportTable } from "@/components/report-table"
+import { CardInfo } from "@/components/scroll-card"
+
+import { SkeletonInfoCard } from "./components/skeleton"
 
 const cards: CardInfo[] = [
   { unidade: "Unidade 1", previsto: 1 },
@@ -24,18 +26,19 @@ const cards: CardInfo[] = [
 ]
 
 async function getCardInfo() {
-  const response = await fetch("http://localhost:3333/macropdtreport", { cache: 'no-store' })
+  const response = await fetch("http://localhost:3333/macropdtreport", {
+    cache: "no-store",
+  })
   if (!response.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error("Failed to fetch data")
   }
-  const data = await response.json()
+  const cardInfo = await response.json()
 
-  return data
+  return cardInfo
 }
 
 export default async function DashboardPage() {
-  const data = await getCardInfo()
-  // const rhByUnidade = data.rhByUnidade
+  const cardInfo = await getCardInfo() // const rhByUnidade = data.rhByUnidade
   // const rhTotalByUnidade = Object.entries(rhByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
   // const totalMonthlyPdtValueByUnidade = data.totalMonthlyPdtValueByUnidade
   // const totalMonthlyPdtValueFormatted = Object.entries(totalMonthlyPdtValueByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
@@ -48,7 +51,7 @@ export default async function DashboardPage() {
       </header>
       <div className="grid grid-cols-3 gap-9 ">
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="RH Total PDT" value={data.rhTotal} />
+          <InfoCard title="RH Total PDT" value={cardInfo.rhTotal} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard title="RH Total Folha" value={29384} />
@@ -57,10 +60,18 @@ export default async function DashboardPage() {
           <InfoCard title="Saldo" value={-9342} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Salário Total PDT" value={data.totalMonthlyPdtValue} isCurrency />
+          <InfoCard
+            title="Salário Total PDT"
+            value={cardInfo.totalMonthlyPdtValue}
+            isCurrency
+          />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Salário Total Folha" value={data.totalMonthlyPdtValue} isCurrency />
+          <InfoCard
+            title="Salário Total Folha"
+            value={cardInfo.totalMonthlyPdtValue}
+            isCurrency
+          />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard title="Saldo" value={0} isCurrency />

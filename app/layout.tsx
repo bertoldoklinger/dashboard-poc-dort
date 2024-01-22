@@ -1,11 +1,11 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import { QueryClientProvider } from "@tanstack/react-query"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
+import { queryClient } from "@/lib/react-query"
 import { cn } from "@/lib/utils"
-import Header from "@/components/header"
-import { Sidebar } from "@/components/sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -36,9 +36,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </QueryClientProvider>
         </body>
       </html>
     </>

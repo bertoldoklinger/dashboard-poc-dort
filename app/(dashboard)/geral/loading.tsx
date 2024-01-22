@@ -16,8 +16,7 @@ export default function LoadingPage() {
         <SkeletonInfoCard />
         <SkeletonInfoCard />
       </div>
-      <div className="grid max-h-[28rem] grid-cols-3 gap-9">
-      </div>
+      <div className="grid max-h-[28rem] grid-cols-3 gap-9"></div>
     </section>
   )
 }

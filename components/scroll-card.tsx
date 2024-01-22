@@ -7,7 +7,6 @@ import { Button } from "./ui/button"
 export type CardInfo = {
   unidade: string
   previsto: number
-
 }
 
 interface ScrollCardProps {
@@ -47,10 +46,17 @@ export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
             key={index}
             className="flex items-center justify-between border-t bg-white p-2 px-3 dark:bg-zinc-500"
           >
-            <h2 className=" text-[#2C55A0] dark:text-gray-100">{card.unidade}</h2>
-            <p className=" font-medium text-[#2C55A0] dark:text-gray-100">{isCurrency
-              ? card.previsto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-              : card.previsto}</p>
+            <h2 className=" text-[#2C55A0] dark:text-gray-100">
+              {card.unidade}
+            </h2>
+            <p className=" font-medium text-[#2C55A0] dark:text-gray-100">
+              {isCurrency
+                ? card.previsto.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })
+                : card.previsto}
+            </p>
           </div>
         ))}
       </div>
