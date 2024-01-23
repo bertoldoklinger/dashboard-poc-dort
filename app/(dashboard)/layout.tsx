@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <section className="relative flex min-h-screen">
-        <div className="fixed h-full">
+        <div className="fixed h-full w-1/6">
           <Sidebar />
         </div>
         <div className="fixed w-full">

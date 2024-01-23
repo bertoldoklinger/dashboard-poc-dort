@@ -46,7 +46,7 @@ export default async function DashboardPage() {
     <section className=" max-h-screen w-full space-y-8">
       <header className="flex h-20 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
         <h1 className="text-center text-3xl font-bold text-[#1F4E79] dark:text-gray-200 md:text-2xl lg:text-[38px]">
-          DADOS GERAIS REDE EMSERH
+          GERENCIAMENTO DE ORÇAMENTO
         </h1>
       </header>
       <div className="grid grid-cols-3 gap-9 ">
@@ -54,31 +54,28 @@ export default async function DashboardPage() {
           <InfoCard title="RH Total PDT" value={cardInfo.rhTotal} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="RH Total Folha" value={29384} />
+          <InfoCard title="Custo de Pessoal" value={29384} isCurrency />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Saldo" value={-9342} />
+          <InfoCard title="Vale Transporte" value={-9342} isCurrency />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard
-            title="Salário Total PDT"
+            title="Insalubridade"
             value={cardInfo.totalMonthlyPdtValue}
             isCurrency
           />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard
-            title="Salário Total Folha"
+            title="Adicional Noturno"
             value={cardInfo.totalMonthlyPdtValue}
             isCurrency
           />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Saldo" value={0} isCurrency />
+          <InfoCard title="Encargo" value={0} isCurrency />
         </Suspense>
-      </div>
-      <div>
-        <ReportTable />
       </div>
     </section>
   )

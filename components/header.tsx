@@ -21,14 +21,10 @@ export default function Header() {
         <Image
           src="/logo-emserh.png"
           alt="Logo"
-          width={350}
+          width={280}
           height={350}
           quality={100}
         />
-        <div className="flex w-full items-center justify-start gap-6">
-          {/* <FilterCombobox value={filter1} onChange={setFilter1} /> */}
-          <SearchFilter />
-        </div>
         <div className="flex items-end space-x-4 text-white">
           <Link href={"/geral"}>
             <HomeIcon className="h-9 w-9 text-[#1E4F7C]" />
