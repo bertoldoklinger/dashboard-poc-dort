@@ -22,7 +22,7 @@ export function Sidebar() {
       <nav className="flex flex-1 flex-col pt-[7.5rem] 2xl:pt-44">
         <ul role="list" className="flex flex-1 flex-col gap-y-2 2xl:gap-y-5">
           <span className="text-center text-xl font-medium text-white 2xl:text-2xl">
-            MACROTIPOS
+            TIPOS
           </span>
           <li>
             <ul role="list" className="-mx-2 space-y-2 2xl:space-y-6">

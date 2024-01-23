@@ -7,7 +7,7 @@ export type getDataFilters = {
 }
 
 export const getData = async ({cargo, unidade}: getDataFilters) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
 
   let data =  [
     {

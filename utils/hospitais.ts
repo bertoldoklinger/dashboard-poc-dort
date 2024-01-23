@@ -117,7 +117,6 @@ const hospitais = [
 
 export const hospitals = hospitais.map((hospital) => ({
   ...hospital,
-  value: `${hospital.value}_${hospital.label
-    .replace(/\s+/g, "_")
-    .toUpperCase()}`,
+  value: `${hospital.label
+    .replace(/\s+/g, "_")}`,
 }))
