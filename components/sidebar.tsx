@@ -2,9 +2,8 @@
 
 import Link from "next/link"
 
-import { ThemeToggle } from "./theme-toggle"
 import { SearchFilter } from "./search-filter"
-
+import { ThemeToggle } from "./theme-toggle"
 
 export function Sidebar() {
   return (
