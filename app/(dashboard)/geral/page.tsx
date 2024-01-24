@@ -5,6 +5,7 @@ import InfoCard from "@/components/info-card"
 import { Piechart } from "@/components/piechart"
 
 import { SkeletonInfoCard } from "./components/skeleton"
+import ScrollCard, { cards } from "@/components/scroll-card"
 
 async function getCardInfo() {
   const response = await fetch("http://localhost:3333/macropdtreport", {
@@ -32,7 +33,7 @@ export default async function DashboardPage() {
       </header>
       <div className="grid grid-cols-3 gap-9">
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="RH Total PDT" value={cardInfo.rhTotal} />
+          <InfoCard title="RH" value={cardInfo.rhTotal} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard title="Custo de Pessoal" value={29384} isCurrency />
@@ -59,7 +60,7 @@ export default async function DashboardPage() {
         </Suspense>
       </div>
       <Grid numItemsMd={2} numItemsLg={2} className="gap-6 ">
-        <Piechart />
+        <ScrollCard cards={cards} />
         <Piechart />
       </Grid>
     </section>

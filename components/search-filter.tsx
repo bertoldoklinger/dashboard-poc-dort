@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils"
 
 import { Spinner } from "./spinner"
 import { Button } from "./ui/button"
-import { Checkbox } from "./ui/checkbox"
 import {
   Command,
   CommandEmpty,
@@ -25,12 +24,8 @@ import {
 } from "./ui/command"
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  FormControl, FormField,
+  FormItem, FormMessage
 } from "./ui/form"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import {
@@ -40,79 +35,73 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
-
-const items = [
-  {
-    id: "recents",
-    label: "Recents",
-  },
-  {
-    id: "home",
-    label: "Home",
-  },
-  {
-    id: "applications",
-    label: "Applications",
-  },
-  {
-    id: "desktop",
-    label: "Desktop",
-  },
-  {
-    id: "downloads",
-    label: "Downloads",
-  },
-  {
-    id: "documents",
-    label: "Documents",
-  },
-] as const
+import { cargos } from "@/utils/cargos"
 
 const SearchFilterSchema = z.object({
+  regiao: z.string().optional(),
+  tipoUnidade: z.string().optional(),
+  categoriaUnidade: z.string().optional(),
   unidade: z.string().optional(),
-  tipo: z.string().optional(),
-  categoria: z.string().optional(),
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item.",
-  }),
+  tipoCargo: z.string().optional(),
+  cargo: z.string().optional(),
 })
 
 type SearchFilterFormData = z.infer<typeof SearchFilterSchema>
 
 export function SearchFilter() {
-  const [open, setOpen] = useState(false)
+  const [openUnidade, setOpenUnidade] = useState(false)
+  const [openCargos, setOpenCargos] = useState(false)
+
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
 
   async function handleSearchFilterData({
-    tipo,
-    categoria,
+    regiao,
+    tipoUnidade,
+    categoriaUnidade,
     unidade,
+    tipoCargo,
+    cargo
   }: SearchFilterFormData) {
-    if (!unidade && !tipo && !categoria) {
-      form.setError("tipo", {
+    if (!regiao && !tipoUnidade && !categoriaUnidade && !unidade && !tipoCargo && !cargo) {
+      form.setError("regiao", {
         type: "manual",
         message: "Preencha pelo menos um campo",
       })
       return
     }
     const params = new URLSearchParams(searchParams)
-    if (tipo) {
-      params.set("tipo", tipo)
+    if (regiao) {
+      params.set("regiao", regiao)
     } else {
-      params.delete("tipo")
+      params.delete("regiao")
+    }
+    if (tipoUnidade) {
+      params.set("tipoUnidade", tipoUnidade)
+    } else {
+      params.delete("tipoUnidade")
     }
     replace(`${pathname}?${params.toString()}`)
-    if (categoria) {
-      params.set("categoria", categoria)
+    if (categoriaUnidade) {
+      params.set("categoriaUnidade", categoriaUnidade)
     } else {
-      params.delete("categoria")
+      params.delete("categoriaUnidade")
     }
     if (unidade) {
       params.set("unidade", unidade)
     } else {
       params.delete("unidade")
+    }
+    if (tipoCargo) {
+      params.set("tipoCargo", tipoCargo)
+    } else {
+      params.delete("tipoCargo")
+    }
+    if (cargo) {
+      params.set("cargo", cargo)
+    } else {
+      params.delete("cargo")
     }
     replace(`${pathname}?${params.toString()}`)
   }
@@ -126,23 +115,31 @@ export function SearchFilter() {
     mode: "onBlur",
     resolver: zodResolver(SearchFilterSchema),
     defaultValues: {
-      unidade: "",
-      tipo: "",
-      categoria: "",
-      items: ["recents", "home"],
+      regiao: '',
+      tipoUnidade: '',
+      categoriaUnidade: '',
+      unidade: '',
+      tipoCargo: '',
+      cargo: ''
     },
   })
+  const regiao = searchParams.get("regiao")
+  const tipoUnidade = searchParams.get("tipoUnidade")
+  const categoriaUnidade = searchParams.get("categoria")
   const unidade = searchParams.get("unidade")
-  const tipo = searchParams.get("tipo")
-  const categoria = searchParams.get("categoria")
+  const tipoCargo = searchParams.get("tipoCargo")
+  const cargo = searchParams.get("cargo")
 
   const { isLoading } = useQuery({
-    queryKey: ["dashboardData", unidade, tipo],
+    queryKey: ["dashboardData", regiao, tipoUnidade, categoriaUnidade, unidade, tipoCargo, cargo],
     queryFn: () =>
       getData({
+        regiao,
+        tipoUnidade,
+        categoriaUnidade,
         unidade,
-        tipo,
-        categoria,
+        tipoCargo,
+        cargo
       }),
   })
 
@@ -152,10 +149,35 @@ export function SearchFilter() {
         onSubmit={form.handleSubmit(handleSearchFilterData)}
         className="flex flex-col items-center gap-2 2xl:gap-3"
       >
-        <h1 className="text-lg text-white 2xl:text-2xl">Tipo</h1>
+        <h1 className="text-lg font-medium text-gray-700 2xl:text-2xl">Região</h1>
         <FormField
           control={form.control}
-          name="tipo"
+          name="regiao"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                key={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectValue placeholder="Filtrar por região..." />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="capital">Capital</SelectItem>
+                  <SelectItem value="interior">Interior</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <h1 className="text-lg font-medium text-gray-700 2xl:text-2xl">Tipo de Unidade</h1>
+        <FormField
+          control={form.control}
+          name="tipoUnidade"
           render={({ field }) => (
             <FormItem className="w-full">
               <Select
@@ -188,10 +210,10 @@ export function SearchFilter() {
             </FormItem>
           )}
         />
-        <h1 className=" text-lg text-white 2xl:text-2xl">Categoria</h1>
+        <h1 className=" text-lg font-medium text-gray-700 2xl:text-2xl">Categoria de Unidade</h1>
         <FormField
           control={form.control}
-          name="categoria"
+          name="categoriaUnidade"
           render={({ field }) => (
             <FormItem className="w-full">
               <Select
@@ -221,7 +243,7 @@ export function SearchFilter() {
             </FormItem>
           )}
         />
-        <h1 className="text-center text-lg text-white 2xl:text-2xl">
+        <h1 className="text-center text-lg font-medium text-gray-700 2xl:text-2xl">
           Unidade Hospitalar
         </h1>
         <FormField
@@ -229,7 +251,7 @@ export function SearchFilter() {
           name="unidade"
           render={({ field }) => (
             <FormItem className="w-full">
-              <Popover open={open} onOpenChange={setOpen}>
+              <Popover open={openUnidade} onOpenChange={setOpenUnidade}>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -244,25 +266,25 @@ export function SearchFilter() {
                     >
                       {field.value
                         ? unidadesHospitalares.find(
-                            (unidade) => unidade.value === field.value
-                          )?.label
+                          (unidade) => unidade.value === field.value
+                        )?.label
                         : "Seleciona uma unidade..."}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
+                <PopoverContent className="w-3/4 p-0">
                   <Command>
                     <CommandInput placeholder="Filtrar por unidade hospitalar..." />
                     <CommandEmpty>Nenhuma unidade encontrada</CommandEmpty>
-                    <CommandGroup className="max-h-[200px] overflow-auto px-0">
+                    <CommandGroup className="max-h-[190px] overflow-auto px-0">
                       {unidadesHospitalares.map((unidade) => (
                         <CommandItem
                           value={unidade.label}
                           key={unidade.value}
                           onSelect={() => {
                             form.setValue("unidade", unidade.value)
-                            setOpen(false)
+                            setOpenUnidade(false)
                           }}
                         >
                           <Check
@@ -284,53 +306,101 @@ export function SearchFilter() {
             </FormItem>
           )}
         />
+        <h1 className=" text-lg font-medium text-gray-700 2xl:text-2xl">Tipo de Cargo</h1>
         <FormField
           control={form.control}
-          name="items"
-          render={() => (
-            <FormItem>
-              <div className="my-4">
-                <h1 className="text-center text-lg text-white 2xl:text-2xl">
-                  Indicadores Avançados
-                </h1>
-              </div>
-              {items.map((item) => (
-                <FormField
-                  key={item.id}
-                  control={form.control}
-                  name="items"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={item.id}
-                        className="flex flex-row items-start space-x-3 space-y-0"
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item.id)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...field.value, item.id])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item.id
-                                    )
-                                  )
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal">
-                          {item.label}
-                        </FormLabel>
-                      </FormItem>
-                    )
-                  }}
-                />
-              ))}
+          name="tipoCargo"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                key={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectValue placeholder="Filtrar por Tipo de Cargo..." />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="gestao">
+                    Gestão
+                  </SelectItem>
+                  <SelectItem value="administrativo">
+                    Administrativo
+                  </SelectItem>
+                  <SelectItem value="assistencial">
+                    Assistencial
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+        <h1 className=" text-lg font-medium text-gray-700 2xl:text-2xl">Cargo</h1>
+        <FormField
+          control={form.control}
+          name="cargo"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <Popover open={openCargos} onOpenChange={setOpenCargos}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-full justify-between bg-white text-left font-medium text-gray-700",
+                        field.value
+                          ? "text-center text-[9px] 2xl:text-xs"
+                          : "text-xs 2xl:text-sm"
+                      )}
+                    >
+                      {field.value
+                        ? cargos.find(
+                          (cargo) => cargo.value === field.value
+                        )?.label
+                        : "Seleciona um cargo..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0">
+                  <Command>
+                    <CommandInput placeholder="Filtrar por cargo..." />
+                    <CommandEmpty>Nenhum cargo encontrado</CommandEmpty>
+                    <CommandGroup className="max-h-[200px] overflow-auto px-0">
+                      {cargos.map((cargo) => (
+                        <CommandItem
+                          value={cargo.label}
+                          key={cargo.value}
+                          onSelect={() => {
+                            form.setValue("cargo", cargo.value)
+                            console.log(cargos)
+                            setOpenCargos(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              cargo.value === field.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {cargo.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="mt-3 flex flex-col gap-3">
           <Button
             type="submit"

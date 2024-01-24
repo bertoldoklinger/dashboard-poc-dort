@@ -1,4 +1,5 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const {nextui} = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
@@ -6,6 +7,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme")
 module.exports = {
   darkMode: ["class"],
   content: [
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -24,6 +26,18 @@ module.exports = {
     },
     extend: {
       colors: {
+        blue: {
+          50: "#e6f1fe",
+          100: "#cce3fd",
+          200: "#99c7fb",
+          300: "#66aaf9",
+          400: "#338ef7",
+          500: "#006FEE",
+          600: "#005bc4",
+          700: "#004493",
+          800: "#002e62",
+          900: "#001731",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -190,5 +204,7 @@ module.exports = {
         /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
     },
   ],
-  plugins: [require("@headlessui/tailwindcss"),require("tailwindcss-animate"), require('tailwind-scrollbar')],
+  plugins: [require("@headlessui/tailwindcss"),require("tailwindcss-animate"), require('tailwind-scrollbar'), nextui({
+    addCommonColors: true,
+  }),],
 };
