@@ -1,29 +1,10 @@
 import { Suspense } from "react"
+import { Grid } from "@tremor/react"
 
 import InfoCard from "@/components/info-card"
-import { ReportTable } from "@/components/report-table"
-import { CardInfo } from "@/components/scroll-card"
+import { Piechart } from "@/components/piechart"
 
 import { SkeletonInfoCard } from "./components/skeleton"
-
-const cards: CardInfo[] = [
-  { unidade: "Unidade 1", previsto: 1 },
-  { unidade: "Unidade 2", previsto: 2 },
-  { unidade: "Unidade 3", previsto: 3 },
-  { unidade: "Unidade 4", previsto: 4 },
-  { unidade: "Unidade 5", previsto: 5 },
-  { unidade: "Unidade 6", previsto: 6 },
-  { unidade: "Unidade 7", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-  { unidade: "Unidade 8", previsto: 7 },
-]
 
 async function getCardInfo() {
   const response = await fetch("http://localhost:3333/macropdtreport", {
@@ -49,7 +30,7 @@ export default async function DashboardPage() {
           GERENCIAMENTO DE ORÇAMENTO
         </h1>
       </header>
-      <div className="grid grid-cols-3 gap-9 ">
+      <div className="grid grid-cols-3 gap-9">
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard title="RH Total PDT" value={cardInfo.rhTotal} />
         </Suspense>
@@ -77,6 +58,10 @@ export default async function DashboardPage() {
           <InfoCard title="Encargo" value={0} isCurrency />
         </Suspense>
       </div>
+      <Grid numItemsMd={2} numItemsLg={2} className="gap-6 ">
+        <Piechart />
+        <Piechart />
+      </Grid>
     </section>
   )
 }
