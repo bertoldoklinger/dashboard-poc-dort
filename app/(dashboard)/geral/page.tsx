@@ -20,10 +20,7 @@ async function getCardInfo() {
 }
 
 export default async function DashboardPage() {
-  const cardInfo = await getCardInfo() // const rhByUnidade = data.rhByUnidade
-  // const rhTotalByUnidade = Object.entries(rhByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
-  // const totalMonthlyPdtValueByUnidade = data.totalMonthlyPdtValueByUnidade
-  // const totalMonthlyPdtValueFormatted = Object.entries(totalMonthlyPdtValueByUnidade).map(([unidade, previsto]) => ({ unidade, previsto: Number(previsto) }));
+  const cardInfo = await getCardInfo()
   return (
     <section className=" max-h-screen w-full space-y-8">
       <header className="flex h-20 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
@@ -36,7 +33,7 @@ export default async function DashboardPage() {
           <InfoCard title="RH" value={cardInfo.rhTotal} />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
-          <InfoCard title="Custo de Pessoal" value={29384} isCurrency />
+          <InfoCard title="Custo de Pessoal" value={cardInfo.totalMonthlyPdtValue} isCurrency />
         </Suspense>
         <Suspense fallback={<SkeletonInfoCard />}>
           <InfoCard title="Vale Transporte" value={-9342} isCurrency />

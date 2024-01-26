@@ -8,7 +8,7 @@ export type getDataFilters = {
 }
 
 export const getData = async ({ regiao,tipoUnidade,categoriaUnidade,unidade,tipoCargo,cargo }: getDataFilters) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 5000))
 
 
   // if (tipoUnidade) {
