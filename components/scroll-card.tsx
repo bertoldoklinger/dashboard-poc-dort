@@ -96,7 +96,7 @@ export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
         <div className="flex-1 font-bold text-[#2C55A0] dark:text-white">Unidade</div>
         <div className="flex flex-1 items-center justify-center">
           <p className="font-bold text-[#2C55A0] dark:text-white">RH</p>
-          <Button variant={"outline"} className="h-8 w-8 text-[#2C55A0]" onClick={handleSort}>
+          <Button variant={"outline"} className="h-8 w-8 text-[#2C55A0] dark:text-white" onClick={handleSort}>
             {isAsc ? <span>↓</span> : <span>↑</span>}
           </Button>
         </div>
@@ -111,7 +111,7 @@ export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
         {sortedCards.map((card, index) => (
           <div
             key={index}
-            className="flex items-center justify-between border-t bg-white p-2 px-3 dark:bg-zinc-500"
+            className="flex items-center justify-between border-t bg-white p-2 px-3 dark:bg-gray-700"
           >
             <h2 className="flex-1 text-[#2C55A0] dark:text-gray-100">
               {card.unidade}

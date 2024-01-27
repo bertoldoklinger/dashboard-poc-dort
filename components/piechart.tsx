@@ -70,7 +70,7 @@ const customTooltip = ({
 
 export function Piechart() {
   return (
-    <Card>
+    <Card className="dark:bg-gray-800">
       <div className="m-auto h-60">
         <Title>🚧 Em Desenvolvimento</Title>
         <DonutChart

@@ -120,7 +120,7 @@ export function SearchFilter() {
         className="flex flex-col items-center gap-2 2xl:gap-6"
       >
         <div className="flex w-full flex-col items-center gap-4">
-          <h1 className="text-lg font-medium text-gray-700 2xl:text-2xl">Unidade Hospitalar</h1>
+          <h1 className="text-lg font-medium text-gray-700 dark:text-gray-50 2xl:text-2xl">Unidade Hospitalar</h1>
           <FormField
             control={form.control}
             name="regiao"
@@ -132,11 +132,11 @@ export function SearchFilter() {
                   key={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">
                       <SelectValue placeholder="Filtrar por região..." />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-50 dark:text-black">
                     <SelectItem value="capital">Capital</SelectItem>
                     <SelectItem value="interior">Interior</SelectItem>
                   </SelectContent>
@@ -156,11 +156,11 @@ export function SearchFilter() {
                   key={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">
                       <SelectValue placeholder="Filtrar por tipo..." />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-50 dark:text-black">
                     <SelectItem value="hospital">Hospital</SelectItem>
                     <SelectItem value="hemorrede">Hemorrede</SelectItem>
                     <SelectItem value="upa">Upa</SelectItem>
@@ -191,11 +191,11 @@ export function SearchFilter() {
                   key={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">
                       <SelectValue placeholder="Filtrar por categoria..." />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-50 dark:text-black">
                     <SelectItem value="hospital">
                       🚧 Em Desenvolvimento
                     </SelectItem>
@@ -224,7 +224,7 @@ export function SearchFilter() {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          "w-full justify-between bg-white text-left font-medium text-gray-700",
+                          "w-full justify-between bg-white text-left font-medium text-gray-700 dark:hover:bg-gray-100 dark:hover:text-black",
                           field.value
                             ? "text-center text-[9px] 2xl:text-xs"
                             : "text-xs 2xl:text-sm"
@@ -240,10 +240,10 @@ export function SearchFilter() {
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-3/4 p-0">
-                    <Command>
+                    <Command className="dark:bg-gray-50 dark:text-black">
                       <CommandInput placeholder="Filtrar por unidade hospitalar..." />
                       <CommandEmpty>Nenhuma unidade encontrada</CommandEmpty>
-                      <CommandGroup className="max-h-[190px] overflow-auto px-0">
+                      <CommandGroup className="max-h-[190px] overflow-auto px-0 dark:bg-gray-50 dark:text-black">
                         {unidadesHospitalares.map((unidade) => (
                           <CommandItem
                             value={unidade.label}
@@ -274,7 +274,7 @@ export function SearchFilter() {
           />
         </div>
         <div className="flex w-full flex-col items-center gap-4">
-          <h1 className=" text-lg font-medium text-gray-700 2xl:text-2xl">Cargo</h1>
+          <h1 className=" text-lg font-medium text-gray-700 dark:text-gray-50 2xl:text-2xl">Cargo</h1>
           <FormField
             control={form.control}
             name="tipoCargo"
@@ -286,11 +286,11 @@ export function SearchFilter() {
                   key={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="text-left font-medium text-gray-700">
+                    <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">
                       <SelectValue placeholder="Filtrar por Tipo de Cargo..." />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-50 dark:text-black">
                     <SelectItem value="gestao">
                       Gestão
                     </SelectItem>
@@ -318,7 +318,7 @@ export function SearchFilter() {
                         variant="outline"
                         role="combobox"
                         className={cn(
-                          "w-full justify-between bg-white text-left font-medium text-gray-700",
+                          "w-full justify-between bg-white text-left font-medium text-gray-700 dark:bg-gray-50 dark:text-black",
                           field.value
                             ? "text-center text-[9px] 2xl:text-xs"
                             : "text-xs 2xl:text-sm"
@@ -334,10 +334,10 @@ export function SearchFilter() {
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-full p-0">
-                    <Command>
+                    <Command className="dark:bg-gray-50 dark:text-black">
                       <CommandInput placeholder="Filtrar por cargo..." />
                       <CommandEmpty>Nenhum cargo encontrado</CommandEmpty>
-                      <CommandGroup className="max-h-[200px] overflow-auto px-0">
+                      <CommandGroup className="max-h-[200px] overflow-auto px-0 dark:bg-gray-50 dark:text-black">
                         {cargos.map((cargo) => (
                           <CommandItem
                             value={cargo.label}
