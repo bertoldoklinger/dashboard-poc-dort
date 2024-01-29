@@ -72,7 +72,7 @@ export function Piechart() {
   return (
     <Card className="dark:bg-gray-800">
       <div className="m-auto h-60">
-        <Title>🚧 Em Desenvolvimento</Title>
+        <Title>Composição Custo Total Mensal</Title>
         <DonutChart
           data={cities}
           index="name"

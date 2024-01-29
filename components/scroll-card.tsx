@@ -11,64 +11,6 @@ export type CardInfo = {
   previsto: number
 }
 
-export const cards = [
-  {
-    unidade: 'Unidade 1',
-    rh: 30,
-    previsto: 1000
-  },
-  {
-    unidade: 'Unidade 2',
-    rh: 30,
-    previsto: 2000
-  },
-  {
-    unidade: 'Unidade 3',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 4',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 5',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-  {
-    unidade: 'Unidade 6',
-    rh: 30,
-    previsto: 3000
-  },
-
-]
 
 interface ScrollCardProps {
   cards: CardInfo[]
