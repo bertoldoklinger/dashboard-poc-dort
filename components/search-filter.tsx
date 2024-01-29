@@ -344,7 +344,6 @@ export function SearchFilter() {
                             key={cargo.value}
                             onSelect={() => {
                               form.setValue("cargo", cargo.value)
-                              console.log(cargos)
                               setOpenCargos(false)
                             }}
                           >

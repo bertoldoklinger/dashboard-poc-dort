@@ -43,7 +43,6 @@ export default async function DashboardPage() {
     rh: rhTotal,
     previsto: totalMensal
   }))
-  console.log(cardInfo.scrollCardInfo)
   return (
     <section className=" max-h-screen w-full space-y-8">
       <header className="flex h-20 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
