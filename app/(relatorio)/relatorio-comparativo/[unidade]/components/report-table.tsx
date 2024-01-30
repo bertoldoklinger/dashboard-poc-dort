@@ -16,6 +16,8 @@ import { formatCurrency } from "../../../../../lib/formatCurrency";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { calculateTotalReport } from "@/lib/calculateTotalReport";
+import { useState } from "react";
+import { Download } from "lucide-react";
 
 export type ReportData = {
   relatorio: {
@@ -66,6 +68,7 @@ export type ReportData = {
 };
 
 export function ReportTable({ search }: { search: string }) {
+  const [isGeneratingExcel, setIsGeneratingExcel] = useState(false);
   const { data, isLoading, error } = useQuery({
     queryKey: ['reportData', search],
     queryFn: () => getData(search.toUpperCase())
@@ -112,15 +115,56 @@ export function ReportTable({ search }: { search: string }) {
     { name: 'custoTotalFolhaMensal', isCurrency: true, highlight: false },
   ];
 
-
-
   if (isLoading) return <div className="flex flex-col items-center justify-center gap-4"><span className="text-xl font-medium text-gray-50">Gerando relatório...</span><Spinner size={60} color="#ffffff" /></div>;
-  if (error) return <div>Ocorreu um erro ao buscar os dados.</div>;
+  if (error) return <div><h1 className="text-xl font-medium text-white">Ocorreu um erro ao buscar os dados!</h1></div>;
+
+  const handleGenerateExcel = async (search: string) => {
+    try {
+      setIsGeneratingExcel(true)
+      const response = await fetch("https://api-pdt.vercel.app/api/relatorio/xlsx", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ unidadeHospitalar: search.toUpperCase() }),
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "relatorioComparativoPdtFolha.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        console.error("Erro na resposta da API:", response.status);
+      }
+    } catch (error) {
+      console.error("Erro ao fazer a requisição:", error);
+    } finally {
+      setIsGeneratingExcel(false);
+    }
+  };
 
 
   return (
     <div className="flex flex-col gap-4">
-      <Button className="w-52 bg-sky-500 hover:bg-sky-600"><Link href={'/relatorio-comparativo'}>Gerar nova comparação</Link></Button>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-medium text-white">{search.toUpperCase()}</h1>
+        <div className="flex items-center gap-3">
+          <Button className="w-52 bg-sky-500 hover:bg-sky-600"><Link href={'/relatorio-comparativo'}>Gerar nova comparação</Link></Button>
+          <Button className="w-52 bg-sky-500 hover:bg-sky-600" onClick={() => handleGenerateExcel(search.toUpperCase())} disabled={isGeneratingExcel}>
+            {isGeneratingExcel ? (
+              <Spinner size={20} className="mr-2 text-white" />
+            ) : (
+              <Download className="mr-2 size-5 text-white" />
+            )}
+            {isGeneratingExcel ? "Gerando..." : "Exportar como Excel"}
+          </Button>
+        </div>
+      </div>
       <ScrollArea className="min-h-auto h-[80vh] rounded-md border bg-white">
         <ScrollBar orientation="horizontal" />
         <Table className="min-w-max grow border border-gray-300 bg-white">
@@ -222,19 +266,23 @@ export function ReportTable({ search }: { search: string }) {
                 </TableCell>
               </TableRow>
             )}
-            <TableRow className="text-left font-medium text-gray-600">
-              <TableCell colSpan={2} className="text-left text-xl font-medium text-gray-600">Total</TableCell>
-              {columns.map(({ name, isCurrency, highlight }) => {
-                const total = calculateTotalReport(data!.relatorio, name, isCurrency);
-                const numericTotal = isCurrency ? parseFloat(total.replace(/[^0-9.-]+/g, "")) : total;
-                const colorClass = highlight ? (numericTotal > 0 ? 'text-green-600' : numericTotal < 0 ? 'text-red-600' : 'text-gray-600') : 'text-gray-600';
-                return (
-                  <TableCell key={name} colSpan={1} className={`text-md text-left font-medium ${colorClass}`}>
-                    {total}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
+            {
+              data && (
+                <TableRow className="text-left font-medium text-gray-600">
+                  <TableCell colSpan={2} className="text-left text-xl font-medium text-gray-600">Total</TableCell>
+                  {columns.map(({ name, isCurrency, highlight }) => {
+                    const total = calculateTotalReport(data!.relatorio, name, isCurrency);
+                    const numericTotal = isCurrency ? parseFloat(total.replace(/[^0-9.-]+/g, "")) : total;
+                    const colorClass = highlight ? (numericTotal > 0 ? 'text-green-600' : numericTotal < 0 ? 'text-red-600' : 'text-gray-600') : 'text-gray-600';
+                    return (
+                      <TableCell key={name} colSpan={1} className={`text-md text-left font-medium ${colorClass}`}>
+                        {total}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              )
+            }
           </TableBody>
         </Table>
       </ScrollArea>

@@ -2,7 +2,7 @@ import { ReportData } from "@/app/(relatorio)/relatorio-comparativo/[unidade]/co
 
 export async function getData(unidadeHospitalar: string): Promise<ReportData> {
 
-  const response = await fetch(`https://api-pdt.vercel.app/api/relatorio/`, {
+  const response = await fetch(`http://localhost:3333/api/relatorio/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
