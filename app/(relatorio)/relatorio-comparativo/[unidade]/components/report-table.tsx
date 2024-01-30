@@ -121,7 +121,7 @@ export function ReportTable({ search }: { search: string }) {
   const handleGenerateExcel = async (search: string) => {
     try {
       setIsGeneratingExcel(true)
-      const response = await fetch("https://api-pdt.vercel.app/api/relatorio/xlsx", {
+      const response = await fetch("http://localhost:3333/api/relatorio/xlsx", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
