@@ -10,7 +10,7 @@ import { Check, ChevronsUpDown, Search } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { getData } from "@/lib/mockData"
+import { getMockData } from "@/lib/mockData"
 import { cn } from "@/lib/utils"
 
 import { Spinner } from "./spinner"
@@ -103,7 +103,7 @@ export function SearchFilter() {
   const { isPending } = useQuery({
     queryKey: ["dashboardData", regiao, tipoUnidade, categoriaUnidade, unidade, tipoCargo, cargo],
     queryFn: () =>
-      getData({
+      getMockData({
         regiao,
         tipoUnidade,
         categoriaUnidade,

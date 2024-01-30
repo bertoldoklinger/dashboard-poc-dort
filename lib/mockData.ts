@@ -7,7 +7,7 @@ export type getDataFilters = {
   cargo: string | null
 }
 
-export const getData = async ({ regiao,tipoUnidade,categoriaUnidade,unidade,tipoCargo,cargo }: getDataFilters) => {
+export const getMockData = async ({ regiao,tipoUnidade,categoriaUnidade,unidade,tipoCargo,cargo }: getDataFilters) => {
   await new Promise((resolve) => setTimeout(resolve, 5000))
 
 

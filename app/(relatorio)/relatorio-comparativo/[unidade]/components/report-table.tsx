@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "../page";
+import { getData } from "../../../../../lib/getData";
 import { Spinner } from "@/components/spinner";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { formatCurrency } from "../../../../../lib/formatCurrency";
