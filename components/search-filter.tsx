@@ -88,7 +88,7 @@ export function SearchFilter() {
       regiao: '',
       tipoUnidade: '',
       categoriaUnidade: '',
-      unidade: '',
+      unidade: 'TODAS',
       tipoCargo: '',
       cargo: ''
     },

@@ -1,4 +1,5 @@
 const unidades = [
+  { value: 786, label: "TODAS" },
   { value: 2, label: "AGENCIA TRANSFUSIONAL BACABAL" },
   { value: 3, label: "AGENCIA TRANSFUSIONAL BARRA DO CORDA" },
   { value: 4, label: "AGENCIA TRANSFUSIONAL CHAPADINHA" },
