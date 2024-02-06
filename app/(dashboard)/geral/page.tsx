@@ -25,7 +25,7 @@ interface CardInfo {
 }
 
 async function getCardInfo(): Promise<CardInfo> {
-  const response = await fetch("http://localhost:3333/api/macropdtreport", {
+  const response = await fetch("https://api-pdt.vercel.app/api/macropdtreport", {
     cache: "no-store",
   })
   if (!response.ok) {
