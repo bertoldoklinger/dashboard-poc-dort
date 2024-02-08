@@ -2,12 +2,12 @@ export type getDataFilters = {
   regiao: string | null
   tipoUnidade: string | null
   categoriaUnidade: string | null
-  unidade: string | null
-  tipoCargo: string | null
-  cargo: string | null
+  unidadeHospitalar: string | null
+  tipoSetor: string | null
+  setor: string | null
 }
 
-export const getMockData = async ({ regiao,tipoUnidade,categoriaUnidade,unidade,tipoCargo,cargo }: getDataFilters) => {
+export const getMockData = async ({ regiao,tipoUnidade,categoriaUnidade,unidadeHospitalar,tipoSetor,setor }: getDataFilters) => {
   await new Promise((resolve) => setTimeout(resolve, 5000))
 
 
@@ -25,6 +25,6 @@ export const getMockData = async ({ regiao,tipoUnidade,categoriaUnidade,unidade,
   // }
 
   return {
-    regiao, tipoUnidade, categoriaUnidade, unidade, tipoCargo, cargo
+    regiao, tipoUnidade, categoriaUnidade, unidadeHospitalar, tipoSetor, setor
   }
 }

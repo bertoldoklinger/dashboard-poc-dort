@@ -1,7 +1,8 @@
-import { randomUUID } from 'node:crypto'
+
 
 
 export const hospitais = [
+  { id: 760, name: 'TODOS' },
   { id: 2, name: 'AGENCIA TRANSFUSIONAL BACABAL' },
   { id: 3, name: 'AGENCIA TRANSFUSIONAL BARRA DO CORDA' },
   { id: 4, name: 'AGENCIA TRANSFUSIONAL CHAPADINHA' },

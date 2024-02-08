@@ -19,7 +19,7 @@ export default function Header() {
           priority
           className="h-auto"
         />
-        <h1 className="text-center text-3xl font-bold uppercase text-[#1F4E79] dark:text-gray-200 md:text-2xl lg:text-[38px]">
+        <h1 className="text-center text-3xl font-bold uppercase tracking-tighter text-[#1F4E79] dark:text-gray-200 md:text-2xl lg:text-[38px]">
           Sistema de Controle de Recursos Humanos
         </h1>
         <div className="flex items-end space-x-4 text-white">

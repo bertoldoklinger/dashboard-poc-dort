@@ -121,13 +121,19 @@ export function ReportTable({ search }: { search: string }) {
   const handleGenerateExcel = async (search: string) => {
     try {
       setIsGeneratingExcel(true)
-      const response = await fetch("https://api-pdt.vercel.app/api/relatorio/xlsx", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ unidadeHospitalar: search.toUpperCase() }),
-      });
+      let response;
+
+      if (search.toUpperCase() === 'TODOS') {
+        response = await fetch("https://api-pdt.vercel.app/api/relatorio-completo/xlsx");
+      } else {
+        response = await fetch("https://api-pdt.vercel.app/api/relatorio/xlsx", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ unidadeHospitalar: search.toUpperCase() }),
+        });
+      }
 
       if (response.ok) {
         const blob = await response.blob();

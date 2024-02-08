@@ -41,9 +41,9 @@ const SearchFilterSchema = z.object({
   regiao: z.string().optional(),
   tipoUnidade: z.string().optional(),
   categoriaUnidade: z.string().optional(),
-  unidade: z.string().optional(),
-  tipoCargo: z.string().optional(),
-  cargo: z.string().optional(),
+  unidadeHospitalar: z.string().optional(),
+  tipoSetor: z.string().optional(),
+  setor: z.string().optional(),
 })
 
 type SearchFilterFormData = z.infer<typeof SearchFilterSchema>
@@ -75,6 +75,8 @@ export function SearchFilter() {
     })
 
     replace(`${pathname}?${params.toString()}`)
+
+
   }
   const handleReset = () => {
     form.reset()
@@ -88,28 +90,28 @@ export function SearchFilter() {
       regiao: '',
       tipoUnidade: '',
       categoriaUnidade: '',
-      unidade: 'TODAS',
-      tipoCargo: '',
-      cargo: ''
+      unidadeHospitalar: 'TODAS',
+      tipoSetor: '',
+      setor: ''
     },
   })
   const regiao = searchParams.get("regiao")
   const tipoUnidade = searchParams.get("tipoUnidade")
   const categoriaUnidade = searchParams.get("categoria")
-  const unidade = searchParams.get("unidade")
-  const tipoCargo = searchParams.get("tipoCargo")
-  const cargo = searchParams.get("cargo")
+  const unidadeHospitalar = searchParams.get("unidadeHospitalar")
+  const tipoSetor = searchParams.get("tipoSetor")
+  const setor = searchParams.get("setor")
 
   const { isPending } = useQuery({
-    queryKey: ["dashboardData", regiao, tipoUnidade, categoriaUnidade, unidade, tipoCargo, cargo],
+    queryKey: ["cardInfo", regiao, tipoUnidade, categoriaUnidade, unidadeHospitalar, tipoSetor, setor],
     queryFn: () =>
       getMockData({
         regiao,
         tipoUnidade,
         categoriaUnidade,
-        unidade,
-        tipoCargo,
-        cargo
+        unidadeHospitalar,
+        tipoSetor,
+        setor
       }),
   })
 
@@ -137,8 +139,8 @@ export function SearchFilter() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="dark:bg-gray-50 dark:text-black">
-                    <SelectItem value="capital">Capital</SelectItem>
-                    <SelectItem value="interior">Interior</SelectItem>
+                    <SelectItem value="CAPITAL">Capital</SelectItem>
+                    <SelectItem value="INTERIOR">Interior</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -161,19 +163,19 @@ export function SearchFilter() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="dark:bg-gray-50 dark:text-black">
-                    <SelectItem value="hospital">Hospital</SelectItem>
-                    <SelectItem value="hemorrede">Hemorrede</SelectItem>
-                    <SelectItem value="upa">Upa</SelectItem>
-                    <SelectItem value="policlinica">Policlinica</SelectItem>
+                    <SelectItem value="HOSPITAL">Hospital</SelectItem>
+                    <SelectItem value="HEMORREDE">Hemorrede</SelectItem>
+                    <SelectItem value="UPA">Upa</SelectItem>
+                    <SelectItem value="POLICLINICA">Policlinica</SelectItem>
                     <SelectItem value="central-de-regulacao">
                       Central de Regulação
                     </SelectItem>
-                    <SelectItem value="centro-especializado">
+                    <SelectItem value="CENTRO ESPECIALIZADO">
                       Centro Especializado
                     </SelectItem>
-                    <SelectItem value="tea">TEA</SelectItem>
-                    <SelectItem value="feme-e-lacen">FEME e LACEN</SelectItem>
-                    <SelectItem value="outros">Outros</SelectItem>
+                    <SelectItem value="FEME">FEME</SelectItem>
+                    <SelectItem value="LABORATORIO">LACEN</SelectItem>
+                    <SelectItem value="OUTROS">Outros</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -214,7 +216,7 @@ export function SearchFilter() {
           />
           <FormField
             control={form.control}
-            name="unidade"
+            name="unidadeHospitalar"
             render={({ field }) => (
               <FormItem className="w-full">
                 <Popover open={openUnidade} onOpenChange={setOpenUnidade}>
@@ -249,7 +251,7 @@ export function SearchFilter() {
                             value={unidade.label}
                             key={unidade.value}
                             onSelect={() => {
-                              form.setValue("unidade", unidade.value)
+                              form.setValue("unidadeHospitalar", unidade.value)
                               setOpenUnidade(false)
                             }}
                           >
@@ -277,7 +279,7 @@ export function SearchFilter() {
           <h1 className=" text-lg font-medium text-gray-700 dark:text-gray-50 2xl:text-2xl">Cargo</h1>
           <FormField
             control={form.control}
-            name="tipoCargo"
+            name="tipoSetor"
             render={({ field }) => (
               <FormItem className="w-full">
                 <Select
@@ -291,13 +293,13 @@ export function SearchFilter() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="dark:bg-gray-50 dark:text-black">
-                    <SelectItem value="gestao">
+                    <SelectItem value="GESTÃO">
                       Gestão
                     </SelectItem>
-                    <SelectItem value="administrativo">
+                    <SelectItem value="ADMINISTRATIVO">
                       Administrativo
                     </SelectItem>
-                    <SelectItem value="assistencial">
+                    <SelectItem value="ASSISTENCIAL">
                       Assistencial
                     </SelectItem>
                   </SelectContent>
@@ -308,7 +310,7 @@ export function SearchFilter() {
           />
           <FormField
             control={form.control}
-            name="cargo"
+            name="setor"
             render={({ field }) => (
               <FormItem className="w-full">
                 <Popover open={openCargos} onOpenChange={setOpenCargos}>
@@ -343,7 +345,7 @@ export function SearchFilter() {
                             value={cargo.label}
                             key={cargo.value}
                             onSelect={() => {
-                              form.setValue("cargo", cargo.value)
+                              form.setValue("setor", cargo.value)
                               setOpenCargos(false)
                             }}
                           >

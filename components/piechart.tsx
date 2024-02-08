@@ -2,30 +2,41 @@
 
 import { Card, DonutChart, Title } from "@tremor/react"
 
+interface CardsData {
+  rh: number;
+  totalMensal: number;
+  valeTransporte: number;
+  insalubridade: number;
+  adicionalNoturno: number;
+  encargos: number;
+  gratificacao: number
+  periculosidade: number
+}
+
 const cities = [
   {
-    name: "New York",
+    name: "Encargo",
     sales: 9800,
   },
   {
-    name: "London",
+    name: "Insalubridade",
     sales: 4567,
   },
   {
-    name: "Hong Kong",
+    name: "Gratificacao",
     sales: 3908,
   },
   {
-    name: "San Francisco",
+    name: "Vale Transporte",
     sales: 2400,
   },
   {
-    name: "Singapore",
+    name: "Adicional Noturno",
     sales: 1908,
   },
   {
-    name: "Zurich",
-    sales: 1398,
+    name: "Periculosidade",
+    sales: 13928,
   },
 ]
 
@@ -35,7 +46,7 @@ interface Payload {
   value: number
 }
 const valueFormatter = (number: number) =>
-  `$ ${new Intl.NumberFormat("us").format(number).toString()}`
+  new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number);
 
 const customTooltip = ({
   payload,
@@ -68,13 +79,39 @@ const customTooltip = ({
   )
 }
 
-export function Piechart() {
+export function Piechart({ adicionalNoturno, encargos, gratificacao, insalubridade, periculosidade, valeTransporte }: CardsData) {
+  const data = [
+    {
+      name: "Encargo",
+      sales: encargos,
+    },
+    {
+      name: "Insalubridade",
+      sales: insalubridade,
+    },
+    {
+      name: "Gratificacao",
+      sales: gratificacao,
+    },
+    {
+      name: "Vale Transporte",
+      sales: valeTransporte,
+    },
+    {
+      name: "Adicional Noturno",
+      sales: adicionalNoturno,
+    },
+    {
+      name: "Periculosidade",
+      sales: periculosidade,
+    },
+  ]
   return (
     <Card className="dark:bg-gray-800">
       <div className="m-auto h-60">
         <Title>Composição Custo Total Mensal</Title>
         <DonutChart
-          data={cities}
+          data={data}
           index="name"
           category="sales"
           showAnimation={true}
@@ -82,6 +119,7 @@ export function Piechart() {
           colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
           variant="donut"
           showLabel
+          className="text-sm"
           customTooltip={customTooltip}
           valueFormatter={valueFormatter}
           onValueChange={(value) => {
