@@ -51,12 +51,14 @@ type SearchFilterFormData = z.infer<typeof SearchFilterSchema>
 export function SearchFilter() {
   const [openUnidade, setOpenUnidade] = useState(false)
   const [openCargos, setOpenCargos] = useState(false)
+  const [isPending, setIsPending] = useState(false)
 
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
 
   async function handleSearchFilterData(data: SearchFilterFormData) {
+    setIsPending(true)
     if (Object.values(data).every(value => !value)) {
       form.setError("regiao", {
         type: "manual",
@@ -76,7 +78,7 @@ export function SearchFilter() {
 
     replace(`${pathname}?${params.toString()}`)
 
-
+    setIsPending(false)
   }
   const handleReset = () => {
     form.reset()
@@ -95,26 +97,8 @@ export function SearchFilter() {
       setor: ''
     },
   })
-  const regiao = searchParams.get("regiao")
-  const tipoUnidade = searchParams.get("tipoUnidade")
-  const categoriaUnidade = searchParams.get("categoria")
-  const unidadeHospitalar = searchParams.get("unidadeHospitalar")
-  const tipoSetor = searchParams.get("tipoSetor")
-  const setor = searchParams.get("setor")
-
-  const { isPending } = useQuery({
-    queryKey: ["cardInfo", regiao, tipoUnidade, categoriaUnidade, unidadeHospitalar, tipoSetor, setor],
-    queryFn: () =>
-      getMockData({
-        regiao,
-        tipoUnidade,
-        categoriaUnidade,
-        unidadeHospitalar,
-        tipoSetor,
-        setor
-      }),
-  })
-
+  const unidade = form.watch('unidadeHospitalar')
+  console.log('unidade', unidade)
   return (
     <Form {...form}>
       <form

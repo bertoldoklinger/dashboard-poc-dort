@@ -13,39 +13,13 @@ interface CardsData {
   periculosidade: number
 }
 
-const cities = [
-  {
-    name: "Encargo",
-    sales: 9800,
-  },
-  {
-    name: "Insalubridade",
-    sales: 4567,
-  },
-  {
-    name: "Gratificacao",
-    sales: 3908,
-  },
-  {
-    name: "Vale Transporte",
-    sales: 2400,
-  },
-  {
-    name: "Adicional Noturno",
-    sales: 1908,
-  },
-  {
-    name: "Periculosidade",
-    sales: 13928,
-  },
-]
 
 interface Payload {
   color: string
   name: string
   value: number
 }
-const valueFormatter = (number: number) =>
+const valueFormatter = (number: number): string =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number);
 
 const customTooltip = ({
@@ -110,23 +84,33 @@ export function Piechart({ adicionalNoturno, encargos, gratificacao, insalubrida
     <Card className="dark:bg-gray-800">
       <div className="m-auto h-60">
         <Title>Composição Custo Total Mensal</Title>
-        <DonutChart
-          data={data}
-          index="name"
-          category="sales"
-          showAnimation={true}
-          showTooltip={true}
-          colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
-          variant="donut"
-          showLabel
-          className="text-sm"
-          customTooltip={customTooltip}
-          valueFormatter={valueFormatter}
-          onValueChange={(value) => {
-            console.log("value", value)
-          }}
-          noDataText="Dados não disponíveis"
-        />
+        <div>
+          <DonutChart
+            data={data}
+            index="name"
+            category="sales"
+            showAnimation={true}
+            showTooltip={true}
+            colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
+            variant="donut"
+            showLabel
+            className="text-sm"
+            customTooltip={customTooltip}
+            valueFormatter={valueFormatter}
+            onValueChange={(value) => {
+              console.log("value", value)
+            }}
+            noDataText="Dados não disponíveis"
+          />
+          {/* <div className="flex flex-col gap-3">
+            <div className="h-2 w-2 rounded-full bg-rose-500" />
+            <div className="h-2 w-2 rounded-full bg-yellow-500" />
+            <div className="h-2 w-2 rounded-full bg-orange-500" />
+            <div className="h-2 w-2 rounded-full bg-indigo-500" />
+            <div className="h-2 w-2 rounded-full bg-blue-500" />
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
+          </div> */}
+        </div>
       </div>
     </Card>
   )
