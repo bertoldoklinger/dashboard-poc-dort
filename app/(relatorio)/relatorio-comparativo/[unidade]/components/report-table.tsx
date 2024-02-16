@@ -124,9 +124,9 @@ export function ReportTable({ search }: { search: string }) {
       let response;
 
       if (search.toUpperCase() === 'TODOS') {
-        response = await fetch("https://api-pdt.vercel.app/api/relatorio-completo/xlsx");
+        response = await fetch("http://localhost:3333/api/relatorio-completo/xlsx");
       } else {
-        response = await fetch("https://api-pdt.vercel.app/api/relatorio/xlsx", {
+        response = await fetch("http://localhost:3333/api/relatorio/xlsx", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -221,7 +221,7 @@ export function ReportTable({ search }: { search: string }) {
           <TableBody>
             {data ? (
               data.relatorio.map((row, i) => (
-                <TableRow key={i} className={`font-medium text-gray-600 ${Number(row.diferencaTotalMensal) < 0 ? "bg-red-200" : ""}`}>
+                <TableRow key={i} className={`font-medium text-gray-600 ${Number(row.diferencaRh) < 0 ? "bg-red-200" : ""}`}>
                   <TableCell>{row.unidadeHospitalar}</TableCell>
                   <TableCell>{row.setor}</TableCell>
                   <TableCell>{row.rh}</TableCell>

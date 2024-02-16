@@ -1,6 +1,6 @@
 'use client'
 
-import { Grid } from "@tremor/react"
+import { Card, Grid } from "@tremor/react"
 
 import InfoCard from "@/components/info-card"
 import { Piechart } from "@/components/piechart"
@@ -14,6 +14,7 @@ import { SkeletonInfoCard } from "./components/skeleton"
 
 
 export default function DashboardPage() {
+
   const searchParams = useSearchParams()
 
   const unidadeHospitalar = searchParams.get('unidadeHospitalar')
@@ -22,8 +23,6 @@ export default function DashboardPage() {
   const tipoSetor = searchParams.get('tipoSetor')
   const setor = searchParams.get('setor')
   const regiao = searchParams.get('regiao')
-
-  console.log({ unidadeHospitalar, tipoUnidade, categoriaUnidade, tipoSetor, setor, regiao })
 
   const { data: cardInfo, isLoading: isLoadingCard } = useQuery({
     queryKey: ['dashboardData', tipoUnidade, categoriaUnidade, tipoSetor, setor, regiao, unidadeHospitalar],
@@ -39,8 +38,16 @@ export default function DashboardPage() {
 
   if (isLoadingCard) {
     return (
-      <div className="flex w-full items-center justify-center pb-40">
-        <div className="grid w-full grid-cols-3 gap-9">
+      <section className="max-h-screen w-full space-y-8">
+        <header className="flex h-14 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
+          <h1 className="text-center text-3xl font-bold tracking-tighter text-[#1F4E79] dark:text-gray-200  md:text-2xl lg:text-[35px]">
+            GERENCIAMENTO DE ORÇAMENTO MENSAL
+          </h1>
+        </header>
+        <div className="grid grid-cols-3 gap-6">
+          <SkeletonInfoCard />
+          <SkeletonInfoCard />
+          <SkeletonInfoCard />
           <SkeletonInfoCard />
           <SkeletonInfoCard />
           <SkeletonInfoCard />
@@ -48,7 +55,7 @@ export default function DashboardPage() {
           <SkeletonInfoCard />
           <SkeletonInfoCard />
         </div>
-      </div>
+      </section>
     )
   }
 
@@ -62,12 +69,12 @@ export default function DashboardPage() {
     previsto: totalMensal
   }))
 
-
+  console.log(cardInfo.scrollCardInfo)
   return (
     <section className=" max-h-screen w-full space-y-6">
       <header className="flex h-14 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
         <h1 className="text-center text-3xl font-bold tracking-tighter text-[#1F4E79] dark:text-gray-200 md:text-2xl lg:text-[35px]">
-          GERENCIAMENTO DE ORÇAMENTO
+          GERENCIAMENTO DE ORÇAMENTO MENSAL
         </h1>
       </header>
       <div className="grid grid-cols-3 gap-6">
@@ -82,7 +89,7 @@ export default function DashboardPage() {
         <InfoCard title="Custo Mensal Realizado(Folha)" value={0} isCurrency />
       </div>
       <Grid numItemsMd={2} numItemsLg={2} className="h-20 gap-5">
-        <ScrollCard cards={cards} isCurrency />
+        <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />
         <Piechart {...cardInfo.cardsData} />
       </Grid>
     </section>

@@ -119,7 +119,7 @@ export function SearchFilter() {
                 >
                   <FormControl>
                     <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">
-                      <SelectValue placeholder="Filtrar por região..." />
+                      <SelectValue placeholder="Filtrar por cidade..." />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="dark:bg-gray-50 dark:text-black">
@@ -175,6 +175,7 @@ export function SearchFilter() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   key={field.value}
+                  disabled
                 >
                   <FormControl>
                     <SelectTrigger className="text-left font-medium text-gray-700 dark:bg-gray-50">

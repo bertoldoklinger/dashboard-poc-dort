@@ -35,6 +35,5 @@ export async function getCardInfo({ regiao,setor,tipoSetor,categoriaUnidade,tipo
       regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadeHospitalar
     }
   })
-  console.log(data)
   return data
 }

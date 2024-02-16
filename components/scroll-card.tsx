@@ -9,15 +9,23 @@ export type CardInfo = {
   unidade: string
   rh: number
   previsto: number
+  setor?: {
+    [nome: string]: {
+      rh: number
+      totalMensal: number
+    }
+  }
 }
 
 
 interface ScrollCardProps {
   cards: CardInfo[]
   isCurrency?: boolean
+  isFiltered?: boolean
 }
 
-export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
+export default function ScrollCard({ cards, isCurrency, isFiltered }: ScrollCardProps) {
+  console.log(isFiltered)
   const [isAsc, setIsAsc] = useState(true)
 
   const sortedCards = [...cards].sort((a, b) => {
@@ -29,13 +37,14 @@ export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
   })
 
   const handleSort = () => {
+
     setIsAsc(!isAsc)
   }
 
   return (
     <Card>
       <header className="flex items-center justify-between rounded-t-lg bg-[#E1E7F2] p-2 dark:bg-gray-800">
-        <div className="flex-1 font-bold text-[#2C55A0] dark:text-white">Unidade</div>
+        <div className="flex-1 font-bold text-[#2C55A0] dark:text-white">{isFiltered ? 'Setor' : 'Unidade'}</div>
         <div className="flex flex-1 items-center justify-center">
           <p className="font-bold text-[#2C55A0] dark:text-white">RH</p>
           <Button variant={"outline"} className="h-8 w-8 text-[#2C55A0] dark:text-white" onClick={handleSort}>
@@ -56,18 +65,18 @@ export default function ScrollCard({ cards, isCurrency }: ScrollCardProps) {
             className="flex items-center justify-between border-t bg-white p-2 px-3 dark:bg-gray-700"
           >
             <h2 className="flex-1 text-[#2C55A0] dark:text-gray-100">
-              {card.unidade}
+              {isFiltered && card.setor ? Object.keys(card.setor)[0] : card.unidade}
             </h2>
             <p className="flex-1 text-center font-medium text-[#2C55A0] dark:text-gray-100">
-              {card.rh}
+              {isFiltered && card.setor ? Object.values(card.setor)[0].rh : card.rh}
             </p>
             <p className="flex-1 text-right font-medium text-[#2C55A0] dark:text-gray-100">
               {isCurrency
-                ? card.previsto.toLocaleString("pt-BR", {
+                ? (isFiltered && card.setor ? Object.values(card.setor)[0].totalMensal : card.previsto).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })
-                : card.previsto}
+                : isFiltered && card.setor ? Object.values(card.setor)[0].totalMensal : card.previsto}
             </p>
           </div>
         ))}
