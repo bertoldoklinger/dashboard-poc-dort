@@ -1,13 +1,10 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
-import { QueryClientProvider } from "@tanstack/react-query"
-import { NextUIProvider } from "@nextui-org/react";
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
-import { queryClient } from "@/lib/react-query"
+
 import { cn } from "@/lib/utils"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

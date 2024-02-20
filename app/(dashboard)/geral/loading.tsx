@@ -1,4 +1,4 @@
-import { SkeletonCard, SkeletonInfoCard } from "./components/skeleton"
+import { SkeletonInfoCard } from "./components/skeleton"
 
 export default function LoadingPage() {
   return (

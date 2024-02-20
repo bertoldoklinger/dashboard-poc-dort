@@ -25,7 +25,6 @@ interface ScrollCardProps {
 }
 
 export default function ScrollCard({ cards, isCurrency, isFiltered }: ScrollCardProps) {
-  console.log(isFiltered)
   const [isAsc, setIsAsc] = useState(true)
 
   const sortedCards = [...cards].sort((a, b) => {
@@ -37,7 +36,6 @@ export default function ScrollCard({ cards, isCurrency, isFiltered }: ScrollCard
   })
 
   const handleSort = () => {
-
     setIsAsc(!isAsc)
   }
 

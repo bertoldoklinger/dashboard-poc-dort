@@ -80,7 +80,7 @@ const Legend: React.FC<LegendProps> = ({ data, colors }) => {
 export function Piechart({ adicionalNoturno, encargos, gratificacao, insalubridade, periculosidade, valeTransporte }: CardsData) {
   const data = [
     {
-      name: "Encargo",
+      name: "Encargos",
       sales: encargos,
     },
     {

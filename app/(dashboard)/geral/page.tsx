@@ -80,13 +80,13 @@ export default function DashboardPage() {
       <div className="grid grid-cols-3 gap-6">
         <InfoCard title="RH" value={cardInfo.cardsData.rh} />
         <InfoCard title="Custo de Pessoal" value={cardInfo.cardsData.totalMensal} isCurrency />
-        <InfoCard title="Encargo" value={cardInfo.cardsData.encargos} isCurrency />
+        <InfoCard title="Encargos" value={cardInfo.cardsData.encargos} isCurrency />
         <InfoCard title="Insalubridade" value={cardInfo.cardsData.insalubridade} isCurrency />
         <InfoCard title="Gratificação" value={cardInfo.cardsData.gratificacao} isCurrency />
         <InfoCard title="Vale Transporte" value={cardInfo.cardsData.valeTransporte} isCurrency />
         <InfoCard title="Adicional Noturno" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
-        <InfoCard title="Custo Mensal Realizado(Folha)" value={0} isCurrency />
+        <InfoCard title="🚧 Custo Mensal Realizado(Folha) 🚧" value={0} isCurrency />
       </div>
       <Grid numItemsMd={2} numItemsLg={2} className="h-20 gap-5">
         <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />
