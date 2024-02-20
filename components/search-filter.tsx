@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { unidadesHospitalares } from "@/utils/hospitais"
 import { ArrowPathIcon } from "@heroicons/react/24/solid"
@@ -36,6 +36,9 @@ import {
   SelectValue,
 } from "./ui/select"
 import { cargos } from "@/utils/cargos"
+import { getUnidadesWithFilter } from "@/app/_api/getUnidadesWithFilter"
+import { Skeleton } from "@nextui-org/react"
+import { getCargosWithFilter } from "@/app/_api/getCargosWithFilters"
 
 const SearchFilterSchema = z.object({
   regiao: z.string().optional(),
@@ -52,6 +55,7 @@ export function SearchFilter() {
   const [openUnidade, setOpenUnidade] = useState(false)
   const [openCargos, setOpenCargos] = useState(false)
   const [isPending, setIsPending] = useState(false)
+
 
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -97,8 +101,23 @@ export function SearchFilter() {
       setor: ''
     },
   })
-  const unidade = form.watch('unidadeHospitalar')
-  console.log('unidade', unidade)
+
+  const regiao = form.watch('regiao')
+  const tipoUnidade = form.watch('tipoUnidade')
+  const tipoSetor = form.watch('tipoSetor')
+
+
+  const { data: unidadesHospitalares, isLoading: isLoadingUnidades, } = useQuery({
+    queryKey: ['unidades', regiao, tipoUnidade],
+    queryFn: () => getUnidadesWithFilter({ regiao, tipoUnidade }),
+  })
+  const { data: cargos, isLoading: isLoadingCargos } = useQuery({
+    queryKey: ['cargos', tipoSetor],
+    queryFn: () => getCargosWithFilter({ tipoSetor }),
+  })
+
+  console.log(cargos)
+
   return (
     <Form {...form}>
       <form
@@ -217,11 +236,15 @@ export function SearchFilter() {
                             : "text-xs 2xl:text-sm"
                         )}
                       >
-                        {field.value
-                          ? unidadesHospitalares.find(
-                            (unidade) => unidade.value === field.value
-                          )?.label
-                          : "Filtrar por unidade..."}
+                        {isLoadingUnidades ? (
+                          <Skeleton />
+                        ) : (
+                          unidadesHospitalares && (field.value
+                            ? unidadesHospitalares.find(
+                              (unidade) => unidade === field.value
+                            ) || 'Filtrar por unidade...'
+                            : "")
+                        )}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
@@ -231,24 +254,24 @@ export function SearchFilter() {
                       <CommandInput placeholder="Filtrar por unidade hospitalar..." />
                       <CommandEmpty>Nenhuma unidade encontrada</CommandEmpty>
                       <CommandGroup className="max-h-[190px] overflow-auto px-0 dark:bg-gray-50 dark:text-black">
-                        {unidadesHospitalares.map((unidade) => (
+                        {unidadesHospitalares && unidadesHospitalares.sort((a, b) => a.localeCompare(b)).map((unidade, i) => (
                           <CommandItem
-                            value={unidade.label}
-                            key={unidade.value}
+                            value={unidade}
+                            key={i}
                             onSelect={() => {
-                              form.setValue("unidadeHospitalar", unidade.value)
+                              form.setValue("unidadeHospitalar", unidade)
                               setOpenUnidade(false)
                             }}
                           >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                unidade.value === field.value
+                                unidade === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
                             />
-                            {unidade.label}
+                            {unidade}
                           </CommandItem>
                         ))}
                       </CommandGroup>
@@ -311,11 +334,13 @@ export function SearchFilter() {
                             : "text-xs 2xl:text-sm"
                         )}
                       >
-                        {field.value
-                          ? cargos.find(
-                            (cargo) => cargo.value === field.value
-                          )?.label
-                          : "Seleciona um cargo..."}
+                        {isLoadingCargos ? (
+                          <Skeleton />
+                        ) : (
+                          cargos && (field.value
+                            ? (cargos.find((cargo) => cargo === field.value) || 'Selecione um cargo...')
+                            : 'Selecione um cargo...')
+                        )}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
@@ -325,24 +350,24 @@ export function SearchFilter() {
                       <CommandInput placeholder="Filtrar por cargo..." />
                       <CommandEmpty>Nenhum cargo encontrado</CommandEmpty>
                       <CommandGroup className="max-h-[200px] overflow-auto px-0 dark:bg-gray-50 dark:text-black">
-                        {cargos.map((cargo) => (
+                        {cargos && cargos.sort((a, b) => a.localeCompare(b)).map((cargo, i) => (
                           <CommandItem
-                            value={cargo.label}
-                            key={cargo.value}
+                            value={cargo}
+                            key={i}
                             onSelect={() => {
-                              form.setValue("setor", cargo.value)
+                              form.setValue("setor", cargo)
                               setOpenCargos(false)
                             }}
                           >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                cargo.value === field.value
+                                cargo === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
                             />
-                            {cargo.label}
+                            {cargo}
                           </CommandItem>
                         ))}
                       </CommandGroup>
