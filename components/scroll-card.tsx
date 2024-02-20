@@ -40,7 +40,7 @@ export default function ScrollCard({ cards, isCurrency, isFiltered }: ScrollCard
   }
 
   return (
-    <Card>
+    <Card fullWidth >
       <header className="flex items-center justify-between rounded-t-lg bg-[#E1E7F2] p-2 dark:bg-gray-800">
         <div className="flex-1 font-bold text-[#2C55A0] dark:text-white">{isFiltered ? 'Setor' : 'Unidade'}</div>
         <div className="flex flex-1 items-center justify-center">

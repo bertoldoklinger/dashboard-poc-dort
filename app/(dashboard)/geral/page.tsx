@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, Grid } from "@tremor/react"
+import { Grid } from "@tremor/react"
 
 import InfoCard from "@/components/info-card"
 import { Piechart } from "@/components/piechart"
@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getCardInfo } from "@/app/_api/getCardInfo"
 import { useSearchParams } from "next/navigation"
 import { SkeletonInfoCard } from "./components/skeleton"
+import { Card, Skeleton } from "@nextui-org/react"
 
 
 
@@ -55,6 +56,41 @@ export default function DashboardPage() {
           <SkeletonInfoCard />
           <SkeletonInfoCard />
         </div>
+        <Grid className="h-72 w-full space-y-4 rounded-lg border-2 p-4 ">
+          <div className="space-y-3">
+            <Skeleton className="w-3/5 rounded-lg" isLoaded>
+              <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-4/5 rounded-lg" isLoaded>
+              <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-2/5 rounded-lg" isLoaded>
+              <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+            </Skeleton>
+          </div>
+          <div className="space-y-3">
+            <Skeleton className="w-3/5 rounded-lg" isLoaded>
+              <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-4/5 rounded-lg" isLoaded>
+              <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-2/5 rounded-lg" isLoaded>
+              <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+            </Skeleton>
+          </div>
+          <div className="space-y-3">
+            <Skeleton className="w-3/5 rounded-lg" isLoaded>
+              <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-4/5 rounded-lg" isLoaded>
+              <div className="h-3 w-4/5 rounded-lg bg-default-200"></div>
+            </Skeleton>
+            <Skeleton className="w-2/5 rounded-lg" isLoaded>
+              <div className="h-3 w-2/5 rounded-lg bg-default-300"></div>
+            </Skeleton>
+          </div>
+        </Grid>
       </section>
     )
   }
@@ -88,9 +124,9 @@ export default function DashboardPage() {
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
         <InfoCard title="🚧 Custo Mensal Realizado(Folha) 🚧" value={0} isCurrency />
       </div>
-      <Grid numItemsMd={2} numItemsLg={2} className="h-20 gap-5">
+      <Grid numItemsMd={1} numItemsLg={1} className="h-72 gap-5">
         <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />
-        <Piechart {...cardInfo.cardsData} />
+        {/* <Piechart {...cardInfo.cardsData} /> */}
       </Grid>
     </section>
   )

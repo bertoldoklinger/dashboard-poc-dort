@@ -30,7 +30,7 @@ interface CardInfoResponse {
 }
 
 export async function getCardInfo({ regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadeHospitalar }: CardInfoQuery): Promise<CardInfoResponse> {
-  const { data } = await api.get<CardInfoResponse>(`http://localhost:3333/api/macropdtreport`, {
+  const { data } = await api.get<CardInfoResponse>(`https://api-pdt.vercel.app/api/macropdtreport`, {
     params: {
       regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadeHospitalar
     }
