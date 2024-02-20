@@ -24,7 +24,7 @@ export default function Header() {
         </h1>
         <div className="flex items-end space-x-4 text-white">
           <ThemeToggle />
-          <Link href={"/geral"}>
+          <Link href={"/home"}>
             <HomeIcon className="h-9 w-9 text-[#1E4F7C] dark:text-white" />
           </Link>
         </div>

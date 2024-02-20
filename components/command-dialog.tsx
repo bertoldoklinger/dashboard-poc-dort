@@ -3,9 +3,7 @@
 import * as React from "react"
 import {
   HomeIcon,
-
 } from "@radix-ui/react-icons"
-
 import {
   CommandDialog,
   CommandEmpty,
@@ -18,14 +16,15 @@ import {
 } from "@/components/ui/command"
 import { hospitais } from "../lib/hospitais"
 import { useRouter } from "next/navigation"
+import { Button } from "./ui/button"
 
 export function CommandDialogDemo() {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const router = useRouter()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+      if (e.key === " " && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
         setOpen((open) => !open)
       }
@@ -37,12 +36,7 @@ export function CommandDialogDemo() {
 
   return (
     <div className="container flex justify-center gap-5 align-middle">
-      <p className="text-2xl text-gray-800">
-        Pressione{" "}
-        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-          <span className="text-lg">ctrl + J</span>
-        </kbd>
-      </p>
+      <Button onClick={() => setOpen(true)} className="rounded bg-blue-400 px-4 py-2 text-white hover:bg-blue-500">Pesquisar unidade</Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Selecione uma unidade hospitalar" autoComplete="false" />
         <CommandList>
@@ -58,6 +52,7 @@ export function CommandDialogDemo() {
           </CommandGroup>
         </CommandList>
       </CommandDialog>
+      <Button onClick={() => router.push('/home')} className="rounded bg-blue-400 px-4 py-2 text-white hover:bg-blue-500">Voltar para a página inicial</Button>
     </div>
   )
 }

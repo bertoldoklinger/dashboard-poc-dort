@@ -11,6 +11,7 @@ import { getCardInfo } from "@/app/_api/getCardInfo"
 import { useSearchParams } from "next/navigation"
 import { SkeletonInfoCard } from "./components/skeleton"
 import { Card, Skeleton } from "@nextui-org/react"
+import { getInfoFolha } from "@/app/_api/getInfoFolha"
 
 
 
@@ -35,6 +36,10 @@ export default function DashboardPage() {
       regiao,
       unidadeHospitalar: unidadeHospitalar === 'TODAS' ? null : unidadeHospitalar
     })
+  })
+  const { data: InfoFolha, isLoading: isLoadingFolha } = useQuery({
+    queryKey: ['folhaInfo'],
+    queryFn: () => getInfoFolha()
   })
 
   if (isLoadingCard) {
@@ -122,7 +127,7 @@ export default function DashboardPage() {
         <InfoCard title="Vale Transporte" value={cardInfo.cardsData.valeTransporte} isCurrency />
         <InfoCard title="Adicional Noturno" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
-        <InfoCard title="🚧 Custo Mensal Realizado(Folha) 🚧" value={0} isCurrency />
+        {!InfoFolha ? <SkeletonInfoCard /> : <InfoCard title="Total Mensal Folha" value={InfoFolha} isCurrency />}
       </div>
       <Grid numItemsMd={1} numItemsLg={1} className="h-72 gap-5">
         <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />
