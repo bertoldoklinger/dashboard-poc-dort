@@ -3,14 +3,13 @@
 import { Grid } from "@tremor/react"
 
 import InfoCard from "@/components/info-card"
-import { Piechart } from "@/components/piechart"
 
 import ScrollCard from "@/components/scroll-card"
 import { useQuery } from "@tanstack/react-query"
 import { getCardInfo } from "@/app/_api/getCardInfo"
 import { useSearchParams } from "next/navigation"
 import { SkeletonInfoCard } from "./components/skeleton"
-import { Card, Skeleton } from "@nextui-org/react"
+import { Skeleton } from "@nextui-org/react"
 import { getInfoFolha } from "@/app/_api/getInfoFolha"
 
 
@@ -37,7 +36,7 @@ export default function DashboardPage() {
       unidadeHospitalar: unidadeHospitalar === 'TODAS' ? null : unidadeHospitalar
     })
   })
-  const { data: InfoFolha, isLoading: isLoadingFolha } = useQuery({
+  const { data: InfoFolha } = useQuery({
     queryKey: ['folhaInfo'],
     queryFn: () => getInfoFolha()
   })
@@ -110,7 +109,6 @@ export default function DashboardPage() {
     previsto: totalMensal
   }))
 
-  console.log(cardInfo.scrollCardInfo)
   return (
     <section className=" max-h-screen w-full space-y-6">
       <header className="flex h-14 w-full items-center justify-center rounded-lg bg-white dark:bg-gray-800">
@@ -127,10 +125,10 @@ export default function DashboardPage() {
         <InfoCard title="Vale Transporte" value={cardInfo.cardsData.valeTransporte} isCurrency />
         <InfoCard title="Adicional Noturno" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
-        {!InfoFolha ? <SkeletonInfoCard /> : <InfoCard title="Total Mensal Folha" value={InfoFolha} isCurrency />}
+        {InfoFolha ? <InfoCard title="Custo Mensal Folha" value={InfoFolha} percentage={(InfoFolha / cardInfo.cardsData.totalMensal)} isCurrency /> : <SkeletonInfoCard />}
       </div>
       <Grid numItemsMd={1} numItemsLg={1} className="h-72 gap-5">
-        <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />
+        {unidadeHospitalar === null ? <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} /> : <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />}
         {/* <Piechart {...cardInfo.cardsData} /> */}
       </Grid>
     </section>

@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { unidadesHospitalares } from "@/utils/hospitais"
 import { ArrowPathIcon } from "@heroicons/react/24/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQuery } from "@tanstack/react-query"
@@ -10,7 +9,6 @@ import { Check, ChevronsUpDown, Search } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { getMockData } from "@/lib/mockData"
 import { cn } from "@/lib/utils"
 
 import { Spinner } from "./spinner"
@@ -242,8 +240,8 @@ export function SearchFilter() {
                           unidadesHospitalares && (field.value
                             ? unidadesHospitalares.find(
                               (unidade) => unidade === field.value
-                            ) || 'Filtrar por unidade...'
-                            : "")
+                            ) || 'TODAS'
+                            : "Filtrar por unidade...")
                         )}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>

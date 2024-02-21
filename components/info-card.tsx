@@ -2,9 +2,10 @@ type InfoCardProps = {
   title: string
   value: number
   isCurrency?: boolean
+  percentage?: number
 }
 
-export default function InfoCard({ title, value, isCurrency }: InfoCardProps) {
+export default function InfoCard({ title, value, isCurrency, percentage }: InfoCardProps) {
   return (
     <div className="flex h-24 flex-col items-center justify-center gap-2 rounded-xl bg-white dark:bg-gray-800">
       <h1 className="text-center font-medium text-[#5D9CD5] dark:text-gray-200 md:text-lg lg:text-2xl">
@@ -17,6 +18,9 @@ export default function InfoCard({ title, value, isCurrency }: InfoCardProps) {
             currency: "BRL",
           }).format(value)
           : value}
+        {percentage && (
+          <span className="pl-2">({`${(percentage * 100).toFixed(2)}%`})</span>
+        )}
       </p>
     </div>
   )
