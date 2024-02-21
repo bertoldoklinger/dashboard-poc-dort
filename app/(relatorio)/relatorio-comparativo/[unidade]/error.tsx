@@ -1,6 +1,6 @@
 'use client'
 
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function Error({
@@ -16,7 +16,7 @@ export default function Error({
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2">
-      <h1 className="text-4xl font-bold">Whooops... Ocorreu um erro fatal na aplicação!</h1>
+      <h1 className="text-4xl font-bold text-white">Whooops... Ocorreu um erro fatal na aplicação!</h1>
       <p className="text-accent-foreground">
         {' '}
         Voltar para a{' '}
