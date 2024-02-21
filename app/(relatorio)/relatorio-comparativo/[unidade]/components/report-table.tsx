@@ -116,7 +116,7 @@ export function ReportTable({ search }: { search: string }) {
   ];
 
   if (isLoading) return <div className="flex flex-col items-center justify-center gap-4"><span className="text-xl font-medium text-gray-50">Gerando relatório...</span><Spinner size={60} color="#ffffff" /></div>;
-  if (error) return <div><h1 className="text-xl font-medium text-white">Ocorreu um erro ao buscar os dados!</h1></div>;
+  if (error) return <div className="flex items-center justify-center"><h1 className="text-xl font-medium text-white">Ocorreu um erro ao buscar os dados!</h1></div>;
 
   const handleGenerateExcel = async (search: string) => {
     try {
