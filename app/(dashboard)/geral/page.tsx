@@ -18,22 +18,24 @@ export default function DashboardPage() {
 
   const searchParams = useSearchParams()
 
-  const unidadeHospitalar = searchParams.get('unidadeHospitalar')
+  const unidadesHospitalares = searchParams.getAll('unidadeHospitalar')
   const tipoUnidade = searchParams.get('tipoUnidade')
   const categoriaUnidade = searchParams.get('categoriaUnidade')
   const tipoSetor = searchParams.get('tipoSetor')
   const setor = searchParams.get('setor')
   const regiao = searchParams.get('regiao')
 
+  console.log({ tipoUnidade, categoriaUnidade, tipoSetor, setor, regiao, unidadesHospitalares })
+
   const { data: cardInfo, isLoading: isLoadingCard } = useQuery({
-    queryKey: ['dashboardData', tipoUnidade, categoriaUnidade, tipoSetor, setor, regiao, unidadeHospitalar],
+    queryKey: ['dashboardData', tipoUnidade, categoriaUnidade, tipoSetor, setor, regiao, unidadesHospitalares],
     queryFn: () => getCardInfo({
       tipoUnidade,
       categoriaUnidade,
       tipoSetor,
       setor,
       regiao,
-      unidadeHospitalar: unidadeHospitalar === 'TODAS' ? null : unidadeHospitalar
+      unidadesHospitalares: unidadesHospitalares && unidadesHospitalares.length > 0 ? unidadesHospitalares : null
     })
   })
   const { data: InfoFolha } = useQuery({
@@ -123,12 +125,12 @@ export default function DashboardPage() {
         <InfoCard title="Insalubridade" value={cardInfo.cardsData.insalubridade} isCurrency />
         <InfoCard title="Gratificação" value={cardInfo.cardsData.gratificacao} isCurrency />
         <InfoCard title="Vale Transporte" value={cardInfo.cardsData.valeTransporte} isCurrency />
-        <InfoCard title="Adicional Noturno" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
+        <InfoCard title="Adicional Noturno + DSR" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
-        {InfoFolha ? <InfoCard title="Custo Mensal Folha" value={InfoFolha} percentage={(InfoFolha / cardInfo.cardsData.totalMensal)} isCurrency /> : <SkeletonInfoCard />}
+        {InfoFolha ? <InfoCard title="Custo Mensal Folha" value={61608124.84} percentage={(61608124.84 / cardInfo.cardsData.totalMensal)} isCurrency /> : <SkeletonInfoCard />}
       </div>
       <Grid numItemsMd={1} numItemsLg={1} className="h-72 gap-5">
-        {unidadeHospitalar === null ? <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} /> : <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />}
+        {unidadesHospitalares === null ? <ScrollCard cards={cards} isCurrency isFiltered={!!unidadesHospitalares && unidadesHospitalares !== 'TODAS'} /> : <ScrollCard cards={cards} isCurrency isFiltered={!!unidadesHospitalares && !unidadesHospitalares.includes('TODAS')} />}
         {/* <Piechart {...cardInfo.cardsData} /> */}
       </Grid>
     </section>

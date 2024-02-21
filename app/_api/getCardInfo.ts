@@ -2,7 +2,7 @@ import { api } from "@/lib/axios"
 
 
 interface CardInfoQuery {
-  unidadeHospitalar?: string | null;
+  unidadesHospitalares?: string[] | null;
   tipoUnidade?: string | null
   categoriaUnidade?: string | null
   tipoSetor?: string | null
@@ -29,10 +29,19 @@ interface CardInfoResponse {
   };
 }
 
-export async function getCardInfo({ regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadeHospitalar }: CardInfoQuery): Promise<CardInfoResponse> {
-  const { data } = await api.get<CardInfoResponse>(`https://api-pdt.vercel.app/api/macropdtreport`, {
+export async function getCardInfo({ regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadesHospitalares }: CardInfoQuery): Promise<CardInfoResponse> {
+  const { data } = await api.get<CardInfoResponse>(`http://localhost:3333/api/macropdtreport`, {
     params: {
-      regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade, unidadeHospitalar
+      regiao,setor,tipoSetor,categoriaUnidade,tipoUnidade,
+      unidadesHospitalares
+    },
+    paramsSerializer: (params) => {
+      return Object.entries(params).map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return value.map((v) => `${key}=${v}`).join("&")
+        }
+        return `${key}=${value}`
+      }).join("&")
     }
   })
   return data

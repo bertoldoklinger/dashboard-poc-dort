@@ -33,7 +33,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
-import { cargos } from "@/utils/cargos"
 import { getUnidadesWithFilter } from "@/app/_api/getUnidadesWithFilter"
 import { Skeleton } from "@nextui-org/react"
 import { getCargosWithFilter } from "@/app/_api/getCargosWithFilters"
@@ -42,7 +41,7 @@ const SearchFilterSchema = z.object({
   regiao: z.string().optional(),
   tipoUnidade: z.string().optional(),
   categoriaUnidade: z.string().optional(),
-  unidadeHospitalar: z.string().optional(),
+  unidadeHospitalar: z.array(z.string()).optional(),
   tipoSetor: z.string().optional(),
   setor: z.string().optional(),
 })
@@ -71,12 +70,16 @@ export function SearchFilter() {
 
     const params = new URLSearchParams(searchParams)
     Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, value)
-      } else {
-        params.delete(key)
+      params.delete(key);
+      if (Array.isArray(value)) {
+        const uniqueValues = Array.from(new Set(value));
+        uniqueValues.forEach((item) => {
+          params.append(key, item);
+        });
+      } else if (value) {
+        params.set(key, value);
       }
-    })
+    });
 
     replace(`${pathname}?${params.toString()}`)
 
@@ -94,7 +97,7 @@ export function SearchFilter() {
       regiao: '',
       tipoUnidade: '',
       categoriaUnidade: '',
-      unidadeHospitalar: 'TODAS',
+      unidadeHospitalar: [],
       tipoSetor: '',
       setor: ''
     },
@@ -229,7 +232,7 @@ export function SearchFilter() {
                         role="combobox"
                         className={cn(
                           "w-full justify-between bg-white text-left font-medium text-gray-700 dark:hover:bg-gray-100 dark:hover:text-black",
-                          field.value
+                          field.value && field.value.length > 0
                             ? "text-center text-[9px] 2xl:text-xs"
                             : "text-xs 2xl:text-sm"
                         )}
@@ -237,11 +240,11 @@ export function SearchFilter() {
                         {isLoadingUnidades ? (
                           <Skeleton />
                         ) : (
-                          unidadesHospitalares && (field.value
-                            ? unidadesHospitalares.find(
-                              (unidade) => unidade === field.value
-                            ) || 'TODAS'
-                            : "Filtrar por unidade...")
+                          unidadesHospitalares && (field.value && field.value.length > 0
+                            ? field.value.length > 1
+                              ? 'Mais de uma unidade...'
+                              : field.value[0]
+                            : "TODAS")
                         )}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -257,14 +260,20 @@ export function SearchFilter() {
                             value={unidade}
                             key={i}
                             onSelect={() => {
-                              form.setValue("unidadeHospitalar", unidade)
-                              setOpenUnidade(false)
+                              if (field.value?.includes(unidade)) {
+                                form.setValue("unidadeHospitalar", (field.value as string[]).filter(item => item !== unidade));
+                              } else {
+                                if (field.value?.includes('TODAS')) {
+                                  form.setValue("unidadeHospitalar", []);
+                                }
+                                form.setValue("unidadeHospitalar", [...(field.value as string[]), unidade]);
+                              }
                             }}
                           >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                unidade === field.value
+                                field.value?.includes(unidade)
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
@@ -376,6 +385,7 @@ export function SearchFilter() {
               </FormItem>
             )}
           />
+
         </div>
 
         <div className="mt-3 flex flex-col gap-3">
