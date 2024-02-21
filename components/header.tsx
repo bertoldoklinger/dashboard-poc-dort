@@ -6,7 +6,11 @@ import { HomeIcon } from "@heroicons/react/24/solid"
 
 import { ThemeToggle } from "./theme-toggle"
 
-export default function Header() {
+interface HeaderProps {
+  showHomeIcon?: boolean;
+}
+
+export default function Header({ showHomeIcon = true }: HeaderProps) {
   return (
     <div className=" absolute w-full pl-4 pr-2 pt-4">
       <header className="relative flex h-24 w-full items-center justify-between space-x-10 rounded-xl bg-white px-5 shadow-xl dark:border-2 dark:border-gray-900 dark:bg-gray-800 2xl:h-32">
@@ -24,9 +28,11 @@ export default function Header() {
         </h1>
         <div className="flex items-end space-x-4 text-white">
           <ThemeToggle />
-          <Link href={"/home"}>
-            <HomeIcon className="h-9 w-9 text-[#1E4F7C] dark:text-white" />
-          </Link>
+          {showHomeIcon && (
+            <Link href={"/home"}>
+              <HomeIcon className="h-9 w-9 text-[#1E4F7C] dark:text-white" />
+            </Link>
+          )}
         </div>
       </header>
     </div>
