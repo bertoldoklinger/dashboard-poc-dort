@@ -125,7 +125,7 @@ export default function DashboardPage() {
         <InfoCard title="Vale Transporte" value={cardInfo.cardsData.valeTransporte} isCurrency />
         <InfoCard title="Adicional Noturno" value={cardInfo.cardsData.adicionalNoturno} isCurrency />
         <InfoCard title="Periculosidade" value={cardInfo.cardsData.periculosidade} isCurrency />
-        {!InfoFolha ? <InfoCard title="Custo Mensal Folha" value={61608124.84} percentage={(61608124.84 / cardInfo.cardsData.totalMensal)} isCurrency /> : <SkeletonInfoCard />}
+        <InfoCard title="Custo Mensal Folha" value={61608124.84} percentage={(61608124.84 / cardInfo.cardsData.totalMensal)} isCurrency />
       </div>
       <Grid numItemsMd={1} numItemsLg={1} className="h-72 gap-5">
         {unidadeHospitalar === null ? <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} /> : <ScrollCard cards={cards} isCurrency isFiltered={!!unidadeHospitalar && unidadeHospitalar !== 'TODAS'} />}
